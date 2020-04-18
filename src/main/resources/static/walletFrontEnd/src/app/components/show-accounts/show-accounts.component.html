@@ -1,0 +1,16 @@
+<div class = "container white" style="margin-top: 70px;">
+  <table class="table table-striped table-dark">
+    <thead>
+      <th>AccountId</th>
+      <th>Name</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let customer of customers">
+        <td>{{customer.accountId}}</td>
+        <td>{{customer.name}}</td>
+        <td><button class = "btn btn-primary" (click)="showAccount(customer)">Show Account</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

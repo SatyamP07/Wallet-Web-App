@@ -1,0 +1,58 @@
+
+<div class = "container white" style="margin-top: 70px;">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Account Details</h2>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button class=" btn btn-bg" (click)= "logout()">Logout</button>
+    </div>
+    <div class="col-sm-2">
+      <button class=" btn btn-bg" (click)= "deactivate()">Deactivate</button>
+    </div>
+  </div>
+  <table class = "table">
+    <tr>
+      <th>AccountId</th>
+      <td>{{customer.accountId}}</td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td>{{customer.name}}</td>
+    </tr>
+    <tr>
+      <th>E-mail Id</th>
+      <td>{{customer.eMail}}</td>
+    </tr>
+    <tr>
+      <th>Mobile Number</th>
+      <td>{{customer.mobileNumber}}</td>
+    </tr>
+  </table>
+</div>
+
+<hr/>
+
+<div class = "container white">
+  <div class = "row">
+    <div class="col-sm-4">
+      <button class = "btn btn-primary" (click)="updateAccount(customer)">Edit Account</button>
+    </div>
+    <div class="col-sm-4">
+      <button class = "btn btn-primary" (click)="showBalance()">Show Balance</button>
+    </div>
+    <div class="col-sm-4">
+      <button class = "btn btn-primary" (click)="doTransactions(customer)">Transactions</button>
+    </div>
+  </div>
+</div><br><hr>
+
+<div class="container white">
+  <table class="table" *ngIf="(flag==1)">
+    <tr>
+      <th>Balance</th>
+      <td>{{customer.balance.toString()}}</td>
+    </tr>
+  </table>
+</div>

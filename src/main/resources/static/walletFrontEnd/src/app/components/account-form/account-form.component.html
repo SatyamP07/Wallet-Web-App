@@ -1,0 +1,172 @@
+<div class="container white" style="margin-top: 70px;" *ngIf = "(createForm)">
+  <div class="container" *ngIf = "(flag==0)">
+    <h2> Create an Account</h2>
+    <form (ngSubmit)="increamentFlag()" #createAccountForm= "ngForm">
+      <div class="form group">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="customer.name" #name= "ngModel" required pattern="[A-Za-z\s]{4,20}"> 
+      </div>
+      <small [hidden]="(name.valid || name.pristine) || name.touched" class="invalid-data">
+        Invalid Name (should consist of only alphabets. Length: max-20, min-4)
+      </small>
+      <div class="form group">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" class="form-control" [(ngModel)]="customer.eMail" required #email="ngModel" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"> 
+      </div>
+      <small [hidden]="(email.valid || email.pristine) || email.touched" class="invalid-data">
+        Invalid email
+      </small>
+      <div class="form group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="number" name="mobileNumber" class="form-control" [(ngModel)]="customer.mobileNumber" required #mobile="ngModel" pattern="[0-9]{10}">
+      </div>
+      <small [hidden]="(mobile.valid || mobile.pristine) || mobile.touched" class="invalid-data">
+        Invalid Mobile Number (should consists of exact 10 digits)
+      </small><br>
+      <input type="submit" value="Submit" class="btn btn-success" [disabled] = "!createAccountForm.form.valid">
+    </form>
+  </div>
+
+  <div class="container" *ngIf = "(flag==1)">
+    <h2> Set Account Password</h2>
+    <small>Your Security Is Our Priority</small>
+    <form (ngSubmit) = "setPassword()" #createPasswordForm= "ngForm">
+      <div class="form group">
+        <label for="password1">Password</label>
+        <input type="password" name="password1" class="form-control" [(ngModel)]="passwords[0]" required #password1="ngModel" pattern="[A-Za-z0-9!@&]{6,12}"> 
+      </div>
+      <small [hidden]="(password1.valid || password1.pristine) || password1.touched" class="invalid-data">
+        Password Length: max-12, min-6. 
+      </small>
+      <div class="form group">
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" class="form-control" [(ngModel)]="passwords[1]" required #password2="ngModel" pattern="[A-Za-z0-9!@&]{6,12}" > 
+      </div>
+      <small [hidden]="(password1.valid || password1.pristine || password1.touched) && passwords[0] == passwords[1]" class="invalid-data">
+        Password did not match 
+      </small><br>
+      <input type="submit" value="Submit" class="btn btn-success" [disabled] = "!createPasswordForm.form.valid">
+    </form>
+  </div>
+
+  <div class="container" *ngIf = "(flag==2)">
+    <h2> Set Transaction Pin</h2>
+    <small>2 Walls Protection Is Always Better Than One</small>
+    <form  (ngSubmit) = "setTPin()" #createTPinForm= "ngForm">
+      <div class="form group">
+        <label for="password1">Pin</label>
+        <input type="password" name="password1" class="form-control" [(ngModel)]="transacPins[0]" required #tPin1="ngModel" pattern="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small [hidden]="(tPin1.valid || tPin1.pristine) || tPin1.touched" class="invalid-data">
+        Transaction Pin should be a 4 digit number 
+      </small>
+      <div class="form group">
+        <label for="password2">Confirm Pin</label>
+        <input type="password" name="password2" class="form-control" [(ngModel)]="transacPins[1]" required #tPin2="ngModel" pattern="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small [hidden]="(tPin1.valid || tPin1.pristine || tPin1.touched) && transacPins[0] == transacPins[1]" class="invalid-data">
+        Transaction Pin did not match 
+      </small>
+      <br>
+      <input type="submit" value="Submit" class="btn btn-primary" [disabled] = "!createTPinForm.form.valid">
+    </form>
+  </div>
+
+<!-- ---------------------------------------------Else Part--------------------------------------------------------------------- -->
+
+<div class="container white" style="margin-top: 70px;" *ngIf = "(!createForm)">
+  <div *ngIf = "(changeFlag == 0)">
+    <h2> Editing the Account</h2>
+    <form (ngSubmit)="processForm()" #editAccountForm= "ngForm">
+      <div class="form group">
+        <label for="name">Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="customer.name" #nameEdit= "ngModel" required pattern="[A-Za-z\s]{4,20}"> 
+      </div>
+      <small [hidden]="(nameEdit.valid || nameEdit.pristine) || nameEdit.touched" class="invalid-data">
+        Invalid Name (should consist of only alphabets. Length: max-20, min-4)
+      </small>
+      <div class="form group">
+        <label for="email">E-mail</label>
+        <input type="email" name="email" class="form-control" [(ngModel)]="customer.eMail" required #emailEdit="ngModel" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"> 
+      </div>
+      <small [hidden]="(emailEdit.valid || emailEdit.pristine) || emailEdit.touched" class="invalid-data">
+        Invalid email
+      </small>
+      <div class="form group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="number" name="mobileNumber" class="form-control" [(ngModel)]="customer.mobileNumber" required #mobileEdit="ngModel" pattern="[0-9]{10}"> 
+      </div><br>
+      <small [hidden]="(mobileEdit.valid || mobileEdit.pristine) || mobileEdit.touched" class="invalid-data">
+        Invalid Mobile Number (should consists of exact 10 digits)
+      </small><br>
+      <input type="submit" value="Save Edits" class="btn btn-primary" [disabled] = "!editAccountForm.form.valid">
+    </form><br><br>
+
+    <div class = "row">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-3">
+        <button class = "btn btn-warning" (click)="changePassword()">Change Account Password</button>
+      </div>
+      <div class="col-sm-3">
+        <button class = "btn btn-warning" (click)="changeTPin()">Change Transaction Pin</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf = "(changeFlag == 1)">
+    <h2> Change Account Password</h2>
+    <form  (ngSubmit) = "confirmPassword()" #editPassword="ngForm">
+      <div class="form group">
+        <label for="password">Current Password</label>
+        <input type="password" name="password" class="form-control" [(ngModel)]="passwords[2]" required #passwordCurrent="ngModel"> 
+      </div>
+      <small [hidden]="passwordCurrent.touched && passwords[2] == customer.accountPassword" class="invalid-data">
+        Incorrect current password 
+      </small>
+      <div class="form group">
+        <label for="password1">Password</label>
+        <input type="password" name="password1" class="form-control" [(ngModel)]="passwords[0]" required #password1="ngModel" pattern="[A-Za-z0-9!@&]{6,12}"> 
+      </div>
+      <small [hidden]="(password1.valid || password1.pristine) || password1.touched" class="invalid-data">
+        Password Length: max-12, min-6. 
+      </small>
+      <div class="form group">
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" class="form-control" [(ngModel)]="passwords[1]" required #password2="ngModel" pattern="[A-Za-z0-9!@&]{6,12}" >> 
+      </div>
+      <small [hidden]="(password1.valid || password1.pristine) || password1.touched && password1==password2" class="invalid-data">
+        Password did not match 
+      </small><br>
+      <input type="submit" value="Submit" class="btn btn-success" [disabled] = "!editPassword.form.valid">
+    </form>
+  </div>
+
+  <div class="container" *ngIf = "(changeFlag==2)">
+    <h2> Change Transaction Pin</h2>
+    <form  (ngSubmit) = "confirmTPin()" #editTPin="ngForm">
+      <div class="form group">
+        <label for="password">Pin</label>
+        <input type="password" name="password" class="form-control" [(ngModel)]="transacPins[2]" required #tPin="ngModel"> 
+      </div>
+      <small [hidden]="tPin.touched && transacPins[2] == customer.transactionPin" class="invalid-data">
+        Incorrect current transaction pin 
+      </small>
+      <div class="form group">
+        <label for="password1">Pin</label>
+        <input type="password" name="password1" class="form-control" [(ngModel)]="transacPins[0]" required #tPin1="ngModel" pattern="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small [hidden]="(tPin1.valid || tPin1.pristine) || tPin1.touched" class="invalid-data">
+        Transaction Pin should be a 4 digit number 
+      </small>
+      <div class="form group">
+        <label for="password2">Confirm Pin</label>
+        <input type="password" name="password2" class="form-control" [(ngModel)]="transacPins[1]" required #tPin1="ngModel" pattern="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small [hidden]="(tPin1.valid || tPin1.pristine) || tPin1.touched && transacPins[0] == transacPins[1]" class="invalid-data">
+        Transaction Pin did not match 
+      </small><br>
+      <input type="submit" value="Submit" class="btn btn-success" [disabled] = "!editTPin.form.valid">
+    </form>
+  </div>
+</div>
+

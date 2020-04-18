@@ -1,0 +1,12 @@
+.white{
+    color: white;
+}
+
+.invalid-data {
+    color: tomato;
+}
+
+.btn-bg {
+    background-color: #242582;
+    color: tomato;
+}

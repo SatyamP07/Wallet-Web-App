@@ -1,0 +1,142 @@
+<div class = "container white" style="margin-top: 70px;">
+  <div class = "row ">
+    <div class="col-sm-4">
+      <h2> Hello, {{customer.name}}</h2>
+    </div>
+    <div class="col-sm-6"></div>
+    <div class="col-sm-2">
+      <button class="btn btn-bg" (click)= "viewAccount()">View Account</button>
+    </div>
+  </div>
+  <div class = "row">
+    <div class="col-sm-3">
+      <button class = "btn btn-success" (click)="doDeposit()">Deposit</button>
+    </div>
+    <div class="col-sm-3">
+      <button class = "btn btn-primary" (click)="doWithdraw()">Withdraw</button>
+    </div>
+    <div class="col-sm-3">
+      <button class = "btn btn-warning" (click)="doFundTransfer()">Fund Transfer</button>
+    </div>
+    <div class="col-sm-3">
+      <button class = "btn btn-primary" (click)="showTransactions()">Show All Transactions</button>
+    </div>
+  </div>
+</div><br>
+
+<div class="container white">
+  <div *ngIf= "(flag == 1 && !transactionFlag)">
+    <form (ngSubmit)="proceedDeposit()" #deposiForm = "ngForm">
+      <div class="form group">
+        <label for="money">Amount to be Deposited</label>
+        <input type="number" name="money" class="form-control" [(ngModel)]="money" #Money="ngModel" pattern="[0-9]"> 
+      </div>
+      <br>
+      <input type="submit" value="Proceed" class="btn btn-success" [disabled] = "!deposiForm">
+    </form>
+  </div>
+</div>
+
+<div class = "container white">
+  <div *ngIf = "(flag == 1 && transactionFlag)">
+    <form (ngSubmit)="deposit()" #deposiForm="ngForm">
+      <div class="form group">
+        <label for="tPin">Enter Transaction Pin to proceed...</label>
+        <input type="password" name="tPin" class="form-control" [(ngModel)]="tPin" #tpin="ngModel" patten="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small class="invalid-data" [hidden]= "checkPassword(tPin, customer.transactionPin) && tpin.valid">
+        Please enter the correct Transaction Pin
+      </small>
+      <br>
+      <input type="submit" value="Deposit" class="btn btn-success" [disabled]= "!deposiForm.form.valid">
+    </form>
+  </div>
+</div>
+
+<div class="container white">
+  <div *ngIf= "(flag == 2 && !transactionFlag)">
+    <form (ngSubmit)="proceedWithdraw()" #withdrawForm = "ngForm">
+      <div class="form group">
+        <label for="money">Amount to be Withdrawed</label>
+        <input type="number" name="money" class="form-control" [(ngModel)]= "money" #moneyRef="ngModel" pattern="[0-9]{1-10}"> 
+      </div>
+      <small class="invalid-data" *ngIf = "greaterThan(money, customer.balance)">
+        Your balance is less than the amount you want to transact.
+      </small>
+      <br>
+      <input type="submit" value="Proceed" class="btn btn-success" [disabled] = "!withdrawForm.form.valid && greaterThan(money, customer.balance)">
+    </form>
+  </div>
+</div>
+
+<div class = "container white">
+  <div *ngIf = "(flag == 2 && transactionFlag)">
+    <form (ngSubmit)="withdraw()" #withdrawForm = "ngForm">
+      <div class="form group">
+        <label for="tPin">Enter Transaction Pin to proceed...</label>
+        <input type="password" name="tPin" class="form-control" [(ngModel)]="tPin" #tpin="ngModel" patten="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small class="invalid-data" [hidden]= "checkPassword(tPin, customer.transactionPin) && tpin.valid">
+        Please enter the correct Transaction Pin
+      </small>
+      <br>
+      <input type="submit" value="Withdraw" class="btn btn-success" [disabled] = "!withdrawForm.form.valid">
+    </form>
+  </div>
+</div>
+
+<div class="container white">
+  <div *ngIf= "(flag == 3 && !transactionFlag)">
+    <form (ngSubmit)="proceedFundTransfer()" #fundTransfer= "ngForm">
+      <div class="form group">
+        <label for="receiverId">Receiver's Account Id</label>
+        <input type="number" name="money" class="form-control" [(ngModel)]="receiverId" #ReceiverId= "ngModel" pattern="[1-9]{1}[0-9]{7}"> 
+      </div>
+      <small class="invalid-data" [hidden] = "ReceiverId.valid">
+        Please enter the valid Account Id
+      </small>
+      <div class="form group">
+        <label for="money">Amount to be tranfered</label>
+        <input type="number" name="money" class="form-control" [(ngModel)]="money" #moneyRef2="ngModel" pattern="[0-9]"> 
+      </div>
+      <small class="invalid-data" *ngIf = "greaterThan(money, customer.balance)">
+        Your balance is less than the amount you want to transact.
+      </small>
+      <br>
+      <input type="submit" value="Submit" class="btn btn-success" [disabled] = "fundTransfer.form.valid">
+    </form>
+  </div>
+</div>
+
+<div class = "container white">
+  <div *ngIf = "(flag == 3 && transactionFlag)">
+    <form (ngSubmit)="transferFund()">
+      <div class="form group">
+        <label for="tPin">Enter Transaction Pin to proceed...</label>
+        <input type="password" name="tPin" class="form-control" [(ngModel)]="tPin" #tpin="ngModel" patten="[1-9]{1}[0-9]{3}"> 
+      </div>
+      <small class="invalid-data" [hidden]= "checkPassword(tPin, customer.transactionPin) && tpin.valid">
+        Please enter the correct Transaction Pin
+      </small>
+      <br>
+      <input type="submit" value="Transfer" class="btn btn-success">
+    </form>
+  </div>
+</div>
+
+<div class="container white">
+  <table class="table" *ngIf= "(flag == 4)">
+    <thead>
+      <th>Transaction Id</th>
+      <th>Transaction Type</th>
+      <th>Date</th>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let transaction of transactions">
+        <td>{{transaction.transactionId}}</td>
+        <td>{{transaction.type}}</td>
+        <td>{{transaction.date}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

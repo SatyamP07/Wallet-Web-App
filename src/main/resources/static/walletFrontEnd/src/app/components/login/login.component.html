@@ -1,0 +1,18 @@
+<div class="container white">
+  <h2>Login!</h2>
+  <form (ngSubmit) = "login()">
+    <div class="form group">
+      <label for="id">AccountId</label>
+      <input type="String" name="id" class="form-control curved-border" placeholder="1000XXXX" [(ngModel)]="accountId"> 
+    </div>
+    <div class="form group">
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control curved-border" placeholder="********" [(ngModel)]="password"> 
+    </div>
+    <small class="invalid-data" *ngIf = "invalidFlag">
+      Invalid Account Id / Password
+    </small>
+    <br><br>
+    <input type="submit" value="Login" class="btn btn-success">
+</form>
+</div>
