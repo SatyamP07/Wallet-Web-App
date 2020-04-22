@@ -1,6 +1,7 @@
 .btn-bg {
     background-color: unset;
     font-size: large;
+    color: rgba(255,255,255,0.65);
 }
 
 .flex-container {
@@ -33,6 +34,6 @@
       color: #e2fffd;
       font-size: 28px;
       text-align: right;
-      width: 900px;
+      width: 1000px;
       background-repeat: no-repeat;
   }

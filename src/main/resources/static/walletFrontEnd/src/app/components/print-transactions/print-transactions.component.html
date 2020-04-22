@@ -1,0 +1,21 @@
+<div class= "container">
+  <h2>Transactions</h2>
+  <div class="table-container">
+    <table class="table table-hover table-striped ">
+      <thead style="color: rgba(255,255,255,0.8);">
+        <th>TransactionId</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </thead>
+      <tbody style="color: rgba(255,255,255,0.8)">
+        <tr *ngFor= "let transaction of customer.transactionDetails">
+          <td>{{transaction.transactionId}}</td>
+          <td>{{transaction.type}}</td>
+          <td>{{transaction.amount}}</td>
+          <td>{{transaction.date}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

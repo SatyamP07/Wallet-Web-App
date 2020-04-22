@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!showBalance">
   <h1 style="color: rgba(255, 255, 255, 0.8);"> Account Details</h1>
   <div>
     <table class="table table-layout">
@@ -17,6 +17,18 @@
       <tr>
         <th>Mobile Number</th>
         <td>{{customer.mobileNumber}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="container" *ngIf="showBalance">
+  <h1 style="color: rgba(255, 255, 255, 0.8);"> Account Details</h1>
+  <div>
+    <table class="table table-layout">
+      <tr>
+        <th>Balance</th>
+        <td>{{customer.balance}}</td>
       </tr>
     </table>
   </div>

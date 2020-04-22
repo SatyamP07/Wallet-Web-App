@@ -1,0 +1,10 @@
+.table-container {
+    padding: 10px 10px;
+    font-size: 18px;
+    margin-left: 50px;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    width: 800px;
+    border-collapse: collapse; 
+}

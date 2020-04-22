@@ -4,3 +4,8 @@
     font-family: 'Roboto';
     font-size: 18px;
 }
+
+.margin {
+    content: '';
+    padding: 10px;
+}

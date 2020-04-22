@@ -19,28 +19,35 @@ export class LoginComponent implements OnInit {
   constructor(private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
-    this._accountService.getAccounts().subscribe((customers) => this.customers = customers);
+    this._accountService.getAccounts().subscribe((customers) => {
+      this.customers = customers;
+    });
     this.invalidFlag=false;
   }
 
   login() {
     for(let i=0; i < this.customers.length; i++) {
       if (this.accountId == this.customers[i].accountId) {
+        console.log(this.customers[i].accountId);
         this.accountExists = true;
         break;
        }
     }
       if (this.accountExists) {
         this._accountService.getAccount(this.accountId).subscribe((customer) => this.customer = customer);
-      if ( this.password == this.customer.accountPassword) {
         setTimeout(() => {
-          this._accountService.setCustomer(this.customer);
-          this._accountService.setIsSignedIn(true);
-        this._router.navigate(['/show']);
-        }, 4000);
-      } else {
-        this.invalidFlag = true;
-      }
+          console.log(this.customer)
+          if ( this.password == this.customer.accountPassword) {
+            setTimeout(() => {
+              console.log(this.customer);
+              this._accountService.setCustomer(this.customer);
+              this._accountService.setIsSignedIn(true);
+            this._router.navigate(['/show']);
+            }, 4000);
+          } else {
+            this.invalidFlag = true;
+          }
+        },3000);
       } else {
         this.invalidFlag = true;
       }

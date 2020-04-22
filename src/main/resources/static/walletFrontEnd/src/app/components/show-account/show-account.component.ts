@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from './../../services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
@@ -18,7 +18,9 @@ export class ShowAccountComponent implements OnInit {
   }
 
   showDetails() {
+    this._accountService.setShowBalance(false);
     this._router.navigate(['/show/account']);
+    console.log("details");
   }
 
   editAccount() {
@@ -42,7 +44,9 @@ export class ShowAccountComponent implements OnInit {
   }
 
   showBalance() {
-
+    this._accountService.setShowBalance(true);
+    this._router.navigate(['/show/account']);
+    console.log("balance");
   }
 
   transactions() {
@@ -63,5 +67,8 @@ export class ShowAccountComponent implements OnInit {
   fundTransfer() {
     this._accountService.setTransacType(3);
     this._router.navigate(['show/transactions']);
+  }
+  printTransactions(){
+    this._router.navigate(['show/printTransactions']);
   }
 }

@@ -67,3 +67,8 @@
     margin-left: 20px;
     font-size: 15px;
 }
+
+.margin {
+    content: '';
+    padding: 15px;
+}

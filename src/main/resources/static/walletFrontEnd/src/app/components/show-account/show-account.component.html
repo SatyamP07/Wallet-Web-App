@@ -1,3 +1,4 @@
+<div class = "margin" style="background-image: linear-gradient(-90deg,#083373, #4ABDAC);"></div>
 <div class="page-container">
   <div class="side-bar">
     <div class="list-items">
@@ -27,7 +28,7 @@
       </button>
       <button class="btn list-item" (click)="transactions()">
         <i class= "material-icons">bookmark_border</i>
-        Transactions
+        Transactions Processes
       </button>
       <button class="btn list-item inner-btn" *ngIf="transac" (click)="deposit()">
         <i class= "material-icons">bookmark_border</i>
@@ -40,6 +41,10 @@
       <button class="btn list-item inner-btn" *ngIf="transac" (click)="fundTransfer()">
         <i class= "material-icons">bookmark_border</i>
         Fund Transfer
+      </button>
+      <button class="btn list-item" (click)="printTransactions()">
+        <i class= "material-icons">bookmark_border</i>
+        Transactions
       </button>
     </div>
   </div>

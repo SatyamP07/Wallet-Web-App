@@ -18,11 +18,15 @@ export class AccountFormComponent implements OnInit {
   private passwordsNotMatched: boolean;
   private wrongPassword: boolean;
 
-  constructor(private _accountService: AccountService, private _router: Router) { }
+  constructor(private _accountService: AccountService, private _router: Router) {
+    this._router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    }
+  }
 
   ngOnInit() {
     this.isSignedIn = this._accountService.getIsSignedIn();
-    this.isSignedIn = true;
+    console.log(this.isSignedIn);
     if (this.isSignedIn) {
       this.customer = this._accountService.getCustomer();
     } else {
@@ -76,10 +80,10 @@ export class AccountFormComponent implements OnInit {
         this._accountService.getSignedInAccount().subscribe((customer) => {
           this.customer = customer;
           console.log(customer);
+          this._accountService.setCustomer(this.customer);
+        this._router.navigate(['/show']);
         });
       }, 4000);
-      this._accountService.setCustomer(this.customer);
-        this._router.navigate(['/show']);
     }
   }
 

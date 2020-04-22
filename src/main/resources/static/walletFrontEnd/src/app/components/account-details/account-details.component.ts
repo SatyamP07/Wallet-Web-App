@@ -10,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountDetailsComponent implements OnInit {
   private customer: CustomerDetails;
-  constructor(private _accountService: AccountService, private _router: Router) { }
+  private showBalance: boolean;
+  constructor(private _accountService: AccountService, private _router: Router) {
+    this._router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    }
+  }
 
   ngOnInit() {
     this.customer = this._accountService.getCustomer();
+    this.showBalance = this._accountService.getShowBalance();
   }
 
 }

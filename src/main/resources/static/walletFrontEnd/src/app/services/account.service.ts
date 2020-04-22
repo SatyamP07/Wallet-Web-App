@@ -19,6 +19,7 @@ export class AccountService {
   private signedIn: boolean;
   private editType: number;
   private transacType: number;
+  private showBalance: boolean;
   constructor(private _http: Http) { }
 
   getAccounts() {
@@ -112,6 +113,14 @@ export class AccountService {
   }
   getTransacType() {
     return this.transacType;
+  }
+
+  setShowBalance(showBalance: boolean) {
+    this.showBalance = showBalance;
+  }
+
+  getShowBalance() {
+    return this.showBalance;
   }
 }
 

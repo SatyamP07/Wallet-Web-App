@@ -31,7 +31,6 @@ public class WalletController {
 	
 	@GetMapping("/account/{accountId}")
 	public CustomerDetails getAccount(@PathVariable int accountId){
-		System.out.println(walletRepository.getAccountById(accountId).getBalance());
 		return walletRepository.getAccountById(accountId);
 	}
 	

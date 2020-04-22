@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     const customer = new CustomerDetails;
     this._accountService.setCustomer(customer);
     this._accountService.setIsSignedIn(false);
+    console.log(this._accountService.getIsSignedIn());
     this._router.navigate(['/form']);
   }
   login() {

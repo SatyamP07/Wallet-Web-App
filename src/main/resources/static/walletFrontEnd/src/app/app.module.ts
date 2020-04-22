@@ -11,14 +11,16 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { ShowAccountComponent } from './components/show-account/show-account.component';
 import { TransactionProcessComponent } from './components/transaction-process/transaction-process.component';
-import { AccountDetailsComponent } from './components/account-details/account-details.component';
+import { AccountDetailsComponent } from './components/account-details/account-details.component';;
+import { PrintTransactionsComponent } from './components/print-transactions/print-transactions.component'
 const appRoute: Routes = [
     {path: '', component: HomeComponent},
     {path: 'form', component: AccountFormComponent},
     {path: 'show', component: ShowAccountComponent, children: [
         {path: 'account', component: AccountDetailsComponent},
         {path: 'transactions', component: TransactionProcessComponent},
-        {path: 'form', component: AccountFormComponent}
+        {path: 'form', component: AccountFormComponent},
+        {path: 'printTransactions', component: PrintTransactionsComponent}
     ]}
 ];
 @NgModule({
@@ -26,7 +28,7 @@ const appRoute: Routes = [
         BrowserModule,
         HttpModule,
         FormsModule,
-        RouterModule.forRoot(appRoute)
+        RouterModule.forRoot(appRoute, {onSameUrlNavigation: 'reload'})
     ],
     declarations: [
         AppComponent,
@@ -36,7 +38,8 @@ const appRoute: Routes = [
 ,
         ShowAccountComponent ,
         TransactionProcessComponent ,
-        AccountDetailsComponent  ],
+        AccountDetailsComponent ,
+        PrintTransactionsComponent ],
     providers: [AccountService],
     bootstrap: [AppComponent]
 })
