@@ -6,3 +6,51 @@
 .invalid-data {
     color: tomato;
 }
+
+.border {
+    width: 300px;
+    border-radius: 20px;
+    
+}
+
+.center {
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .main {
+    height: 400px;
+    border-radius: 20px;
+}
+.input-icons i { 
+    position: absolute; 
+} 
+  
+.input-icons { 
+    width: 100%; 
+    margin-bottom: 10px; 
+} 
+  
+.icon { 
+    margin-left: 70px;
+    padding: 10px; 
+    min-width: 40px; 
+} 
+  
+.input-field { 
+    padding: 10px; 
+    text-align: center; 
+} 
+
+.btn-login {
+    background-image: radial-gradient(#083373, #0e70c0);
+    color: silver;
+    width: 225px;
+}

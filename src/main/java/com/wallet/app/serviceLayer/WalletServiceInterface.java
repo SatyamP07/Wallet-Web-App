@@ -19,4 +19,7 @@ public interface WalletServiceInterface {
 	boolean fundTransfer(int senderId, int receiverId, float money);
 	List<TransactionDetails> printTransactions(int accountId);
 	CustomerDetails getSignedInAccount();
+	
+	byte[] passwordEncryptor(byte[] password);
+	byte[] passwordDecryptor(byte[] encrypted);
 }

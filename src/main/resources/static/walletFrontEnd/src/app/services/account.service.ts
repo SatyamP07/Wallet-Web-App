@@ -10,11 +10,15 @@ import { throwError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountService {
+
   private baseUrl: String = 'http://localhost:4444/XYZWallet';
   private headers = new Headers ({'Content-Type': 'application/json'});
   private options = {headers: this.headers};
   private customer: CustomerDetails;
   private createForm: boolean;
+  private signedIn: boolean;
+  private editType: number;
+  private transacType: number;
   constructor(private _http: Http) { }
 
   getAccounts() {
@@ -73,6 +77,7 @@ export class AccountService {
   }
 
   getSignedInAccount() {
+    this.setIsSignedIn(true);
     return this._http.get(this.baseUrl + '/account/signedIn', this.options).pipe(map((response: Response) => response.json()))
     .pipe(catchError(this.errorHandler));
   }
@@ -85,14 +90,28 @@ export class AccountService {
     return this.customer;
   }
 
-  setCreateForm(flag: boolean) {
-    this.createForm = flag;
-  }
-
-  getCreateForm() {
-    return this.createForm;
-  }
   errorHandler(error: Response) {
     return Observable.throw(error || 'SERVER ERROR');
   }
+  getIsSignedIn() {
+    return this.signedIn;
+  }
+  setIsSignedIn(flag: boolean) {
+    this.signedIn = flag;
+  }
+
+  setEditType(editType: number) {
+    this.editType = editType;
+  }
+  getEditType() {
+    return this.editType
+  }
+
+  setTransacType(type: number) {
+    this.transacType = type;
+  }
+  getTransacType() {
+    return this.transacType;
+  }
 }
+

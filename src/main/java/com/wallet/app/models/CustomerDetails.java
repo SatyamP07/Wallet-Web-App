@@ -26,8 +26,8 @@ public class CustomerDetails {
 	private String eMail;
 	@Column(name = "Mobile_number", length=10)
 	private String mobileNumber;
-	@Column(name = "Transaction_pin", length=4)
-	private int transactionPin;
+	@Column(name = "Transaction_pin")
+	private String transactionPin;
 	@Column(name = "Balance", length=9)
 	private float balance;
 	
@@ -77,10 +77,10 @@ public class CustomerDetails {
 	public void setAccountPassword(String accountPassword) {
 		this.accountPassword = accountPassword;
 	}
-	public int getTransactionPin() {
+	public String getTransactionPin() {
 		return transactionPin;
 	}
-	public void setTransactionPin(int transactionPin) {
+	public void setTransactionPin(String transactionPin) {
 		this.transactionPin = transactionPin;
 	}
 	public float getBalance() {

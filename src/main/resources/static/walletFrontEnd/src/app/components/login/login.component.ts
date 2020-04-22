@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
-import { AccountService } from './../../service/account.service';
+import { AccountService } from './../../services/account.service';
 import { CustomerDetails } from './../../customer-details';
 import { Component, OnInit } from '@angular/core';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +9,13 @@ import { forEach } from '@angular/router/src/utils/collection';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-private customer: CustomerDetails;
-private accountId: number;
-private password: string;
-private invalidFlag: boolean;
-private customers: CustomerDetails[];
-private accountExists: boolean = false;
+
+  private customer: CustomerDetails;
+  private accountId: number;
+  private password: string  = null;
+  private invalidFlag: boolean;
+  private customers: CustomerDetails[];
+  private accountExists: boolean = false;
   constructor(private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
@@ -35,6 +35,7 @@ private accountExists: boolean = false;
       if ( this.password == this.customer.accountPassword) {
         setTimeout(() => {
           this._accountService.setCustomer(this.customer);
+          this._accountService.setIsSignedIn(true);
         this._router.navigate(['/show']);
         }, 4000);
       } else {
@@ -44,4 +45,5 @@ private accountExists: boolean = false;
         this.invalidFlag = true;
       }
     }
+
 }

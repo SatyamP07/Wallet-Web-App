@@ -5,7 +5,7 @@ export class CustomerDetails {
     name: String;
     eMail: String;
     mobileNumber: String;
+    transactionPin: String;
     balance: number;
-    transactionPin: number;
     transactionDetails: TransactionDetails[];
 }

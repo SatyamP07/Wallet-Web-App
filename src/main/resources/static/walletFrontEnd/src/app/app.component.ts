@@ -2,7 +2,9 @@
 
 @Component({
     selector: 'app',
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.html',
+    styles: [`
+    `]
 })
 
 export class AppComponent implements OnInit {
@@ -10,6 +12,6 @@ export class AppComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#242582';
+        this._elementRef.nativeElement.ownerDocument.body.style.backgroundImage = 'linear-gradient(-90deg,#083373, #00b389)';
     }
 }

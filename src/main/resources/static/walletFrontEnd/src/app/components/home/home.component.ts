@@ -1,7 +1,7 @@
-import { Router } from '@angular/router';
-import { AccountService } from './../../service/account.service';
+import { AccountService } from './../../services/account.service';
 import { CustomerDetails } from './../../customer-details';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,19 +10,28 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   private customer: CustomerDetails;
+  private isSignedIn: boolean;
+  private logIn: boolean;
   constructor(private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
     this.customer = this._accountService.getCustomer();
+    this.logIn = false;
+    this.isSignedIn = this._accountService.getIsSignedIn();
   }
   newAccount() {
     const customer = new CustomerDetails;
     this._accountService.setCustomer(customer);
-    this._accountService.setCreateForm(true);
+    this._accountService.setIsSignedIn(false);
     this._router.navigate(['/form']);
   }
   login() {
-    this._router.navigate(['/login'])
+    this.logIn = true;
+  }
+
+  showAccount() {
+    this._accountService.setCustomer(this.customer);
+    this._router.navigate(['/show']);
   }
 
 }

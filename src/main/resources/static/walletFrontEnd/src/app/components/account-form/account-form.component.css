@@ -1,15 +1,10 @@
-.white{
-    color: white;
+.input-tag {
+    width: 750px;
+    border-radius: 10px;
 }
 
-.ng-valid[required], .ng-valid.required {
-    border-left: 5px solid #42A948;
-}
-
-.ng-invalid:not(form) {
-    border-left: 5px solid #a94442;
-}
-
-.invalid-data {
-    color: tomato;
+.btn-tag {
+    background-image: radial-gradient(#083373, #0e70c0);
+    color: rgba(255,255,255,0.8);
+    width: 200px;
 }

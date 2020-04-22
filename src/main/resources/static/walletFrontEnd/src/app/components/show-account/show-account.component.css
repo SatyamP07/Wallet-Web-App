@@ -1,16 +1,69 @@
-hr {
-    margin-top: 12px;
-    margin-top: 12px;
-    border: 2px;
-    border-top: 1px turquoise;
+.page-container {
+    display: flex;
+    height: 700px;
+}
+.side-bar {
+    height: 100%;
+    width: 300px;
+    background: rgba(0,0,0,0.3);
+}
+.list-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 18px;
+    font-family: 'Roboto';
+    color: rgba(255,255,255,0.85);
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: transparent;
+    width: 300px;
+    border-radius: 0;
 }
 
-
-.white{
+.list-item:focus {
     color: white;
 }
 
-.btn-bg {
-    background-color: #242582;
-    color: tomato;
+.list-item:hover {
+    color: white;
+}
+
+.list-item:focus::before {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.list-item:hover::before {
+    opacity: 0.5;
+    transform: scaleY(0.5);
+}
+
+.list-item::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5px;
+    top: 0;
+    left: 0;
+    background-color: brown;
+    opacity: 0;
+    transform: scaleY(0);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.list-item i.material-icons {
+    margin-right: 12px;
+}
+.list-items {
+    padding-top: 100px;
+}
+
+.content-container {
+    padding: 50px;
+}
+
+.inner-btn {
+    margin-left: 20px;
+    font-size: 15px;
 }

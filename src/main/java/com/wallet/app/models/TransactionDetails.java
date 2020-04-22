@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "T_Data_V1")
 public class TransactionDetails {
@@ -19,6 +20,8 @@ public class TransactionDetails {
 	private int accountId;
 	@Column(name = "type")
 	private String type;
+	@Column(name = "amount")
+	private float amount;
 	@Column(name = "transaction_date")
 	private Date date;
 	
@@ -45,6 +48,13 @@ public class TransactionDetails {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public float getAmount() {
+		return amount;
+	}
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 	@Override
 	public String toString() {

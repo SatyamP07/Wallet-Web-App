@@ -1,26 +1,28 @@
 <div class="white">
-  <div class = "row">
-    <div class="col-sm-3">
-      <small style="color: #F64C72; margin-top: 20px; margin-left: 25px; font: 14pt sans-serif;">
-        New safer way of Digital Payments
-      </small>
+  <div class = "row" style="background-image: linear-gradient(-90deg,#083373, #4ABDAC);">
+    <div class="col-lg-3">
     </div>
-    <div class="col-sm-5"></div>
-      <div class="col-sm-2">
-        <button class="btn btn-bg" (click) = "newAccount()">Create an Account</button>
-      </div>
-      <div class="col-sm-2">
-        <button class="btn btn-bg" (click)= "login()">Login</button>
-      </div>
-    
-    <!-- <div *ngIf= "loggedIn">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-3"> Hi, {{customer.name}}</div>
-    </div> -->
+    <div class="col-lg-6"></div>
+    <div class="col-lg-2" *ngIf = "!isSignedIn">
+      <button class="btn btn-bg" (click) = "newAccount()">Create an Account</button>
+    </div>
+    <div class="col-lg-1" *ngIf = "!isSignedIn">
+      <button class="btn btn-bg" (click)= "login()">Login</button>
+    </div>
+    <div class="col-lg-3" *ngIf = "isSignedIn">
+      <button class="btn btn-bg" (click)= "showAccount()">Hi, {{customer.name}}</button>
+    </div>
   </div>
-  
-  <div class="container" style="margin-top: 170px;">
-    <h3 style="color: white; align-content: center;">Web App under development...</h3>
-    <h3 style="color: white; align-content: center; margin-left: 90px;">Content coming soon!</h3>
-  </div>
+  <section>
+    <section class="container bg-img" style="margin-top: 60px; margin-left: 30px;">
+      <div style="margin-left: 475px; margin-top: 375px;">
+        Enables you to transact whenever and wherever you want.
+      </div>
+    </section>
+  </section>
+  <aside class = "right" style="margin-top: 40px;" >
+    <div *ngIf = "logIn">
+      <app-login></app-login>
+    </div>
+  </aside>  
 </div>

@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
-import { AccountService } from './../../service/account.service';
-import { CustomerDetails } from './../../customer-details';
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { AccountService } from './../../services/account.service';
+import { Component, OnInit } from '@angular/core';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-show-account',
@@ -9,41 +9,59 @@ import { Component, OnInit, OnChanges } from '@angular/core';
   styleUrls: ['./show-account.component.css']
 })
 export class ShowAccountComponent implements OnInit {
-  private customer: CustomerDetails;
+  private edit: boolean;
+  private transac: boolean;
   constructor(private _accountService: AccountService, private _router: Router) { }
-  private flag: number = 0;
 
   ngOnInit() {
-    if (this._accountService.getCreateForm()) {
-      this._accountService.getSignedInAccount().subscribe((customer) => this.customer = customer);
-      this._accountService.setCustomer(this.customer);
-    } else {
-      this.customer = this._accountService.getCustomer();
-    this._accountService.getAccount(this.customer.accountId).subscribe((customer) => this.customer = customer );
-    }
-    console.log("OnInit");
+    this._accountService.setIsSignedIn(true);
   }
 
-  updateAccount(customer){
-    this._accountService.setCustomer(customer);
-    this._router.navigate(['/form']);
+  showDetails() {
+    this._router.navigate(['/show/account']);
   }
 
-  showBalance(){
-    this.flag = 1;
+  editAccount() {
+    this.edit = true;
+    this.transac = false;
   }
 
-  doTransactions(customer){
-    this._accountService.setCustomer(customer);
-    this._router.navigate(['/tp']);
+  editAccountDetails() {
+    this._accountService.setEditType(1);
+    this._router.navigate(['/show/form']);
   }
 
-  logout() {
-    this._router.navigate(['/']);
+  editAccountPassword() {
+    this._accountService.setEditType(2);
+    this._router.navigate(['/show/form']);
   }
 
-  deactivate(){
-    this._accountService.deleteAccount(this.customer.accountId).subscribe();
-    this._router.navigate(['/']);
+  editTransactionPin() {
+    this._accountService.setEditType(3);
+    this._router.navigate(['/show/form']);
+  }
+
+  showBalance() {
+
+  }
+
+  transactions() {
+    this.edit = false;
+    this.transac = true;
+  }
+
+  deposit() {
+    this._accountService.setTransacType(1);
+    this._router.navigate(['show/transactions']);
+  }
+
+  withdraw() {
+    this._accountService.setTransacType(2);
+    this._router.navigate(['show/transactions']);
+  }
+
+  fundTransfer() {
+    this._accountService.setTransacType(3);
+    this._router.navigate(['show/transactions']);
   }
 }
