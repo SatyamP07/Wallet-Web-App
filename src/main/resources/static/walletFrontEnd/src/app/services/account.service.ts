@@ -50,28 +50,25 @@ export class AccountService {
   }
 
   deposit(accountId: Number, money: Number) {
-    return this._http.put(this.baseUrl + '/account/' + accountId + '/deposit',
-                           money, this.options)
+    return this._http.put(this.baseUrl + '/account/' + accountId + '/deposit/' + money, this.options)
       .pipe(map((response: Response) => response.json()))
       .pipe(catchError(this.errorHandler));
   }
 
   withdraw(accountId: Number, money: Number) {
-    return this._http.put(this.baseUrl + '/account/' + accountId + '/withdraw',
-                          money, this.options)
+    return this._http.put(this.baseUrl + '/account/' + accountId + '/withdraw/' + money, this.options)
       .pipe(map((response: Response) => response.json()))
       .pipe(catchError(this.errorHandler));
   }
 
   fundTransfer(accountId: Number, money: Number, receiverId: Number) {
-    console.log([JSON.stringify(money), JSON.stringify(receiverId)], JSON.parse);
     return this._http.put(this.baseUrl + '/account/' + accountId + '/fundTransfer/' + receiverId + '/' + money,
                          [JSON.stringify(money), JSON.stringify(receiverId)], this.options)
       .pipe(map((response: Response) => response.json()))
       .pipe(catchError(this.errorHandler));
   }
 
-  printTransactions(accountId: Number){
+  printTransactions(accountId: Number) {
     return this._http.get(this.baseUrl + '/account/' + accountId + '/printTransactions', this.options)
       .pipe(map((response: Response) => response.json()))
       .pipe(catchError(this.errorHandler));

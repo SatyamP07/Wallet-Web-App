@@ -8,6 +8,7 @@ import com.wallet.app.models.CustomerDetails;
 import com.wallet.app.models.TransactionDetails;
 @Service
 public interface WalletServiceInterface {
+
 	CustomerDetails createAccount(CustomerDetails customer);
 	CustomerDetails updateAccount(CustomerDetails customer);
 	boolean deleteAccountById(int accountID);
@@ -18,7 +19,6 @@ public interface WalletServiceInterface {
 	boolean withdraw(int accountId, float money);
 	boolean fundTransfer(int senderId, int receiverId, float money);
 	List<TransactionDetails> printTransactions(int accountId);
-	CustomerDetails getSignedInAccount();
 	
 	byte[] passwordEncryptor(byte[] password);
 	byte[] passwordDecryptor(byte[] encrypted);

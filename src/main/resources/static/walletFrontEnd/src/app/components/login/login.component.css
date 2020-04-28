@@ -1,10 +1,16 @@
-
+.container {
+    margin-left: 150px;
+    margin-top: 50px;
+}
 .white{
     color: white;
 }
 
 .invalid-data {
     color: tomato;
+    width:300px;
+    margin-left: 130px;
+    padding-bottom: 10px;
 }
 
 .border {

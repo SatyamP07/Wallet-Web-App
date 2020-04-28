@@ -28,7 +28,7 @@
     <table class="table table-layout">
       <tr>
         <th>Balance</th>
-        <td>{{customer.balance}}</td>
+        <td>{{ customer.balance | currency: 'INR'}}</td>
       </tr>
     </table>
   </div>

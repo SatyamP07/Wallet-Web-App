@@ -1,6 +1,8 @@
 package com.wallet.app.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wallet.app.daoLayer.WalletDaoInterface;
 import com.wallet.app.models.CustomerDetails;
 import com.wallet.app.models.TransactionDetails;
 import com.wallet.app.serviceLayer.WalletServiceInterface;
@@ -37,11 +40,11 @@ public class WalletController {
 	@DeleteMapping("/account/{accountId}")
 	public boolean deleteAccount(@PathVariable int accountId){
 		walletRepository.deleteAccountById(accountId);
-		return true; 
+		return true;
 	}
 	
 	@PostMapping("/account")
-	public CustomerDetails createAccount(@RequestBody CustomerDetails customer){
+	public CustomerDetails createAccount(@RequestBody CustomerDetails customer){		
 		return walletRepository.createAccount(customer);
 	}
 	
@@ -50,15 +53,13 @@ public class WalletController {
 		return walletRepository.updateAccount(customer);
 	}
 	
-	@PutMapping("/account/{accountId}/deposit")
-	public boolean deposit(@PathVariable int accountId, @RequestBody String money) {
-		float amount = Float.parseFloat(money);
+	@PutMapping("/account/{accountId}/deposit/{amount}")
+	public boolean deposit(@PathVariable int accountId, @PathVariable float amount) {
 		return walletRepository.deposit(accountId, amount);
 	}
 	
-	@PutMapping("/account/{accountId}/withdraw")
-	public boolean withdraw(@PathVariable int accountId, @RequestBody String money) {
-		float amount = Float.parseFloat(money);
+	@PutMapping("/account/{accountId}/withdraw/{amount}")
+	public boolean withdraw(@PathVariable int accountId, @PathVariable float amount) {
 		return walletRepository.withdraw(accountId, amount);
 	}
 	
@@ -71,10 +72,4 @@ public class WalletController {
 	public List<TransactionDetails> printTransactions(@PathVariable int accountId){
 		return walletRepository.printTransactions(accountId);
 	}
-	
-	@GetMapping("/account/signedIn")
-	public CustomerDetails getSignedInAccount() {
-		return walletRepository.getSignedInAccount();
-	}
-	
 }

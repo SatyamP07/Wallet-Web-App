@@ -10,18 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountFormComponent implements OnInit {
   private customer: CustomerDetails;
-  private passwords: string[] = ["", "", ""];
+  private passwords: string[] = ['', '', ''];
   private formCount: number;
-  private transactionPins: string[] = ["", "", ""];
+  private transactionPins: string[] = ['', '', ''];
   private isSignedIn: boolean;
   private editType: number;
   private passwordsNotMatched: boolean;
   private wrongPassword: boolean;
+  private nationality: number = 0;
 
   constructor(private _accountService: AccountService, private _router: Router) {
     this._router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
-    }
+    };
   }
 
   ngOnInit() {
@@ -38,8 +39,10 @@ export class AccountFormComponent implements OnInit {
         'mobileNumber': undefined,
         'transactionPin': undefined,
         'balance': undefined,
+        'nationalIdType': undefined,
+        'nationalIdNumber': undefined,
         'transactionDetails': []
-      }
+      };
     }
     this.editType = this._accountService.getEditType();
     this.formCount = 0;
@@ -49,6 +52,10 @@ export class AccountFormComponent implements OnInit {
     this.customer.name = detailsForm.value.name;
     this.customer.eMail = detailsForm.value.email;
     this.customer.mobileNumber = detailsForm.value.mobileNumber;
+    this.customer.nationalIdType = detailsForm.value.nationalityType;
+    this.customer.nationalIdNumber = detailsForm.value.nationalityNumber;
+    console.log(detailsForm.value.nationalityType);
+    console.log(detailsForm.value.nationalityNumber);
     this.formCount = 1;
   }
   setPassword(passwordForm) {
@@ -71,19 +78,17 @@ export class AccountFormComponent implements OnInit {
       this.passwordsNotMatched = false;
       console.log(this.customer);
       this._accountService.createAccount(this.customer).subscribe((customer) => {
-        console.log(customer);
+        this.customer.accountId = customer.accountId;
+        this.customer.balance = customer.balance;
+        console.log(this.customer);
       }, (error) => {
         console.log(error);
       });
-      this._accountService.setIsSignedIn(true);
       setTimeout(() => {
-        this._accountService.getSignedInAccount().subscribe((customer) => {
-          this.customer = customer;
-          console.log(customer);
-          this._accountService.setCustomer(this.customer);
-        this._router.navigate(['/show']);
-        });
-      }, 4000);
+        this._accountService.setCustomer(this.customer);
+      this._accountService.setIsSignedIn(true);
+      this._router.navigate(['/show/account']);
+      });
     }
   }
 
@@ -96,6 +101,8 @@ export class AccountFormComponent implements OnInit {
     this.wrongPassword = false;
     this.passwordsNotMatched = false;
     if (this.customer.accountPassword == passwordForm.value.password) {
+      this.passwords[0] = passwordForm.value.password1;
+      this.passwords[1] = passwordForm.value.password2;
       if (this.passwords[0] == this.passwords[1]) {
         this.customer.accountPassword = this.passwords[0];
         console.log(this.customer);
@@ -108,7 +115,7 @@ export class AccountFormComponent implements OnInit {
           this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
             this._accountService.setCustomer(customer);
           });
-          this._router.navigate(['/show']);
+          this._router.navigate(['/show/account']);
         }, 4000);
       } else {
         this.passwordsNotMatched = true;
@@ -122,6 +129,8 @@ export class AccountFormComponent implements OnInit {
     this.wrongPassword = false;
     this.passwordsNotMatched = false;
     if (this.customer.transactionPin == tPinForm.value.tPin) {
+      this.transactionPins[0] = tPinForm.value.tPin1;
+      this.transactionPins[1] = tPinForm.value.tPin2;
       if (this.transactionPins[0] == this.transactionPins[1]) {
         this.customer.transactionPin = this.transactionPins[0];
         console.log(this.customer);
@@ -141,6 +150,17 @@ export class AccountFormComponent implements OnInit {
       }
     } else {
       this.wrongPassword = true;
+    }
+  }
+
+  checkNationality(nationalityProof) {
+    if (nationalityProof == 'AadharCard') {
+      this.nationality = 1;
+      console.log(this.nationality);
+    }
+    if (nationalityProof == 'PanCard') {
+      this.nationality = 2;
+      console.log(this.nationality);
     }
   }
 }

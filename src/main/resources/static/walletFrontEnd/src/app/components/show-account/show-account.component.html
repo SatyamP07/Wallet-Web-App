@@ -46,11 +46,21 @@
         <i class= "material-icons">bookmark_border</i>
         Transactions
       </button>
+      <button class="btn list-item" (click)="logOut()" style="margin-top: 50px;">
+        <i class= "material-icons">bookmark_border</i>
+        Log Out
+      </button>
+      <button class="btn list-item" (click)="deleteAccount()" >
+        <i class= "material-icons">bookmark_border</i>
+        Delete Account
+      </button>
     </div>
   </div>
 
   <div class="content-container">
-    <router-outlet></router-outlet>
+    <div style="margin-left: 50px; margin-top: 20px;">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 
 </div>

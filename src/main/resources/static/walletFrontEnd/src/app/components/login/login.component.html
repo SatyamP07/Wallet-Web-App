@@ -1,7 +1,7 @@
-<div class="container white" style="margin-left: 65px ;">
+<div class="container white">
   <h2 class="center">Login!</h2>
   <br>
-  <form (ngSubmit) = "login()">
+  <form (ngSubmit) = "login(loginForm)"  #loginForm="ngForm">
     <div class="form group input-icons">
       <i class="material-icons icon" style="color: black;">person</i>
       <input type="String" name="id" class="form-control border center-block input-field" placeholder="1000XXXX" [(ngModel)]="accountId">
@@ -10,7 +10,7 @@
       <i class="material-icons icon" style="color: black;">https</i>
       <input type="password" name="password" class="form-control border center-block input-field" style="border-color: lightgreen;" placeholder="********" [(ngModel)]="password"> 
     </div>
-    <small class="invalid-data" *ngIf = "invalidFlag">
+    <small class="invalid-data center" *ngIf = "invalidFlag">
       Invalid Account Id / Password
     </small>
     <br>

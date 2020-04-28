@@ -21,11 +21,24 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this._accountService.getAccounts().subscribe((customers) => {
       this.customers = customers;
+      console.log(customers);
     });
+    this.customer = {
+      'accountId': undefined,
+      'accountPassword': undefined,
+      'name': undefined,
+      'eMail': undefined,
+      'mobileNumber': undefined,
+      'transactionPin': undefined,
+      'balance': undefined,
+      'nationalIdType': undefined,
+      'nationalIdNumber': undefined,
+      'transactionDetails': []
+    };
     this.invalidFlag=false;
   }
 
-  login() {
+  login(loginForm) {
     for(let i=0; i < this.customers.length; i++) {
       if (this.accountId == this.customers[i].accountId) {
         console.log(this.customers[i].accountId);
@@ -34,20 +47,21 @@ export class LoginComponent implements OnInit {
        }
     }
       if (this.accountExists) {
+        this.accountExists = false;
         this._accountService.getAccount(this.accountId).subscribe((customer) => this.customer = customer);
         setTimeout(() => {
-          console.log(this.customer)
+          console.log(this.customer);
           if ( this.password == this.customer.accountPassword) {
             setTimeout(() => {
               console.log(this.customer);
               this._accountService.setCustomer(this.customer);
               this._accountService.setIsSignedIn(true);
-            this._router.navigate(['/show']);
-            }, 4000);
+            this._router.navigate(['/show/account']);
+            }, 1500);
           } else {
             this.invalidFlag = true;
           }
-        },3000);
+        },1500);
       } else {
         this.invalidFlag = true;
       }

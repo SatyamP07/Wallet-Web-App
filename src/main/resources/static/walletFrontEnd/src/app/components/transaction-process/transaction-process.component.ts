@@ -43,7 +43,7 @@ export class TransactionProcessComponent implements OnInit {
           this._accountService.setCustomer(customer);
         });
       }, 4000);
-      this._router.navigate(['/show']);
+      this._router.navigate(['/show/account']);
     } else {
       this.wrongPassword = true;
     }
@@ -72,7 +72,7 @@ export class TransactionProcessComponent implements OnInit {
           this._accountService.setCustomer(customer);
         });
       }, 4000);
-      this._router.navigate(['/show']);
+      this._router.navigate(['/show/account']);
     } else {
       this.wrongPassword = true;
     }
@@ -101,7 +101,7 @@ export class TransactionProcessComponent implements OnInit {
           this._accountService.setCustomer(customer);
         });
       }, 4000);
-      this._router.navigate(['/show']);
+      this._router.navigate(['/show/account']);
     } else {
       this.wrongPassword = true;
     }

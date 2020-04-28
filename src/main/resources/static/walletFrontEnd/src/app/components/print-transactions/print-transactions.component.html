@@ -12,7 +12,7 @@
         <tr *ngFor= "let transaction of customer.transactionDetails">
           <td>{{transaction.transactionId}}</td>
           <td>{{transaction.type}}</td>
-          <td>{{transaction.amount}}</td>
+          <td>{{transaction.amount | currency: 'INR'}}</td>
           <td>{{transaction.date}}</td>
         </tr>
       </tbody>

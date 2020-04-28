@@ -3,19 +3,25 @@ package com.wallet.app.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "C_Data_V1")
+@SequenceGenerator(name = "accountSequence", initialValue = 10000000)
 public class CustomerDetails {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accountSequence")
 	@Column(name = "Account_id", length=7)
 	private int accountId;
 	@Column(name = "Account_password", length=15)
@@ -30,6 +36,10 @@ public class CustomerDetails {
 	private String transactionPin;
 	@Column(name = "Balance", length=9)
 	private float balance;
+	@Column(name = "National_id_type")
+	private String nationalIdType;
+	@Column(name = "National_id_number")
+	private String nationalIdNumber;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = TransactionDetails.class)
 	@JoinColumn(name = "account_id", referencedColumnName = "account_id")
@@ -90,6 +100,18 @@ public class CustomerDetails {
 		this.balance = balance;
 	}
 	
+	public String getNationalIdType() {
+		return nationalIdType;
+	}
+	public void setNationalIdType(String nationalIdType) {
+		this.nationalIdType = nationalIdType;
+	}
+	public String getNationalIdNumber() {
+		return nationalIdNumber;
+	}
+	public void setNationalIdNumber(String nationalIdNumber) {
+		this.nationalIdNumber = nationalIdNumber;
+	}
 	public List<TransactionDetails> getTransactionDetails() {
 		return transactionDetails;
 	}
