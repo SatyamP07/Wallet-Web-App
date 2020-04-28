@@ -1,4 +1,4 @@
-<div class="container white">
+<div class="container white" *ngIf = "!adminLogin">
   <h2 class="center">Login!</h2>
   <br>
   <form (ngSubmit) = "login(loginForm)"  #loginForm="ngForm">
@@ -16,6 +16,35 @@
     <br>
     <div class= "center">
       <input type="submit" value="Login" class="btn btn-login border">
+    </div>
+  </form>
+  <div class= "center">
+    <input type="submit" value="Admin Login" class="btn btn-switch" (click)="accessFlag()">
   </div>
-</form>
+</div>
+
+
+<div class="container white" *ngIf = "adminLogin">
+  <h2 class="center">Admin Login!</h2>
+  <br>
+  <form (ngSubmit) = "login(loginForm)"  #loginForm="ngForm">
+    <div class="form group input-icons">
+      <i class="material-icons icon" style="color: black;">person</i>
+      <input type="String" name="id" class="form-control border center-block input-field" placeholder="1000XXXX" value="Administrator" readonly>
+    </div>
+    <div class="form group input-icons">
+      <i class="material-icons icon" style="color: black;">https</i>
+      <input type="password" name="password" class="form-control border center-block input-field" style="border-color: lightgreen;" placeholder="********" [(ngModel)]="password"> 
+    </div>
+    <small class="invalid-data center" *ngIf = "invalidFlag">
+      Invalid Password
+    </small>
+    <br>
+    <div class= "center">
+      <input type="submit" value="Login" class="btn btn-login border">
+    </div>
+  </form>
+  <div class= "center">
+    <input type="submit" value="User Login" class="btn btn-switch" (click)="accessFlag()">
+  </div>
 </div>

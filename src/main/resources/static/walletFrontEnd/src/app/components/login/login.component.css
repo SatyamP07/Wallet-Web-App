@@ -60,3 +60,9 @@
     color: silver;
     width: 225px;
 }
+
+.btn-switch {
+    background-color: unset;
+    color: silver;
+    font-size: 14px;
+}

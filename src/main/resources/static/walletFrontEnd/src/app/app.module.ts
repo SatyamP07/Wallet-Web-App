@@ -11,8 +11,10 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { ShowAccountComponent } from './components/show-account/show-account.component';
 import { TransactionProcessComponent } from './components/transaction-process/transaction-process.component';
-import { AccountDetailsComponent } from './components/account-details/account-details.component';;
-import { PrintTransactionsComponent } from './components/print-transactions/print-transactions.component'
+import { AccountDetailsComponent } from './components/account-details/account-details.component';
+import { PrintTransactionsComponent } from './components/print-transactions/print-transactions.component';
+import { AdminAccessComponent } from './components/admin-access/admin-access.component';
+
 const appRoute: Routes = [
     {path: '', component: HomeComponent},
     {path: 'form', component: AccountFormComponent},
@@ -21,7 +23,8 @@ const appRoute: Routes = [
         {path: 'transactions', component: TransactionProcessComponent},
         {path: 'form', component: AccountFormComponent},
         {path: 'printTransactions', component: PrintTransactionsComponent}
-    ]}
+    ]},
+    {path: 'admin', component: AdminAccessComponent}
 ];
 @NgModule({
     imports: [
@@ -34,12 +37,12 @@ const appRoute: Routes = [
         AppComponent,
         HomeComponent,
         LoginComponent,
-        AccountFormComponent
-,
+        AccountFormComponent,
         ShowAccountComponent ,
         TransactionProcessComponent ,
         AccountDetailsComponent ,
-        PrintTransactionsComponent ],
+        PrintTransactionsComponent ,
+        AdminAccessComponent],
     providers: [AccountService],
     bootstrap: [AppComponent]
 })

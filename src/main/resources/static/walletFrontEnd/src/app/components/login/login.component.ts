@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   private invalidFlag: boolean;
   private customers: CustomerDetails[];
   private accountExists: boolean = false;
+  private adminLogin: boolean;
   constructor(private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
@@ -39,13 +40,22 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginForm) {
-    for(let i=0; i < this.customers.length; i++) {
-      if (this.accountId == this.customers[i].accountId) {
-        console.log(this.customers[i].accountId);
-        this.accountExists = true;
-        break;
-       }
-    }
+    if (this.adminLogin) {
+      if (this.password == 'QW123EBT!') {
+        this.invalidFlag = false;
+        this._router.navigate(['/admin']);
+      }
+      else {
+        this.invalidFlag = true;
+      }
+    } else {
+      for(let i=0; i < this.customers.length; i++) {
+        if (this.accountId == this.customers[i].accountId) {
+          console.log(this.customers[i].accountId);
+          this.accountExists = true;
+          break;
+         }
+      }
       if (this.accountExists) {
         this.accountExists = false;
         this._accountService.getAccount(this.accountId).subscribe((customer) => this.customer = customer);
@@ -57,14 +67,19 @@ export class LoginComponent implements OnInit {
               this._accountService.setCustomer(this.customer);
               this._accountService.setIsSignedIn(true);
             this._router.navigate(['/show/account']);
-            }, 1500);
+            }, 2000);
           } else {
             this.invalidFlag = true;
           }
-        },1500);
+        },1000);
       } else {
         this.invalidFlag = true;
       }
     }
+  }
+
+  accessFlag() {
+    this.adminLogin = !this.adminLogin;
+  }
 
 }

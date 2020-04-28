@@ -88,13 +88,13 @@ export class AccountFormComponent implements OnInit {
         this._accountService.setCustomer(this.customer);
       this._accountService.setIsSignedIn(true);
       this._router.navigate(['/show/account']);
-      });
+      }, 2000);
     }
   }
 
   editDetails () {
     this._accountService.updateAccount(this.customer).subscribe();
-    this._router.navigate(['/show']);
+    this._router.navigate(['/show/account']);
   }
 
   editPassword(passwordForm) {
@@ -143,8 +143,8 @@ export class AccountFormComponent implements OnInit {
           this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
             this._accountService.setCustomer(customer);
           });
-          this._router.navigate(['/show']);
-        }, 4000);
+          this._router.navigate(['/show/account']);
+        }, 2000);
       } else {
         this.passwordsNotMatched = true;
       }
