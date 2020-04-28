@@ -18,6 +18,7 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showBalance = false;
     this.customer = this._accountService.getCustomer();
     this.showBalance = this._accountService.getShowBalance();
   }

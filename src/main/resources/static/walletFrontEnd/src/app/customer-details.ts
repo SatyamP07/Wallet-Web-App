@@ -7,5 +7,7 @@ export class CustomerDetails {
     mobileNumber: String;
     transactionPin: String;
     balance: number;
+    nationalIdType: String;
+    nationalIdNumber: String;
     transactionDetails: TransactionDetails[];
 }
