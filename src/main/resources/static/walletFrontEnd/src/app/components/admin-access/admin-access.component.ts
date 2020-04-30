@@ -26,4 +26,11 @@ export class AdminAccessComponent implements OnInit {
   deleteAccount(i) {
     this._accountService.deleteAccount(this.customers[i].accountId).subscribe();
   }
+
+  logout(){
+    let confirmation = confirm('Do you want to logout?');
+    if (confirmation) {
+      this._router.navigate(['']);
+    }
+  }
 }

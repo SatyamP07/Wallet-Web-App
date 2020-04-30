@@ -18,6 +18,7 @@ export class ShowAccountComponent implements OnInit {
   ngOnInit() {
     this._accountService.setIsSignedIn(true);
     this.customer = this._accountService.getCustomer();
+    console.log(this.customer);
   }
 
   showDetails() {
@@ -77,6 +78,7 @@ export class ShowAccountComponent implements OnInit {
   logOut() {
     let confirmation = confirm('Do you want to logout?');
     if (confirmation) {
+      localStorage.removeItem('customer');
       this._accountService.setIsSignedIn(false);
       this._router.navigate(['']);
     }
@@ -85,6 +87,7 @@ export class ShowAccountComponent implements OnInit {
   deleteAccount() {
     let confirmation = confirm('Do you want to deactivate account?\nNote: Pressing OK will permanently delete the account.');
     if (confirmation) {
+      localStorage.removeItem('customer');
       this._accountService.setIsSignedIn(false);
       this._accountService.deleteAccount(this.customer.accountId).subscribe();
       this._router.navigate(['']);

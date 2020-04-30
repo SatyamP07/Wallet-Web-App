@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionProcessComponent implements OnInit {
   private customer: CustomerDetails;
+  private customers: CustomerDetails[];
   private transactionType: number;
   private transactionFlag: boolean;
   private money: number;
@@ -17,12 +18,15 @@ export class TransactionProcessComponent implements OnInit {
   private lowBalance: boolean;
   private negativeAmount: boolean;
   private receiverId: number;
+  private receiverExists: boolean;
+  private invalidAccountId: boolean;
 
   constructor(private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
     this.customer = this._accountService.getCustomer();
     this.transactionType = this._accountService.getTransacType();
+    this._accountService.getAccounts().subscribe(customers => this.customers = customers);
   }
 
   proceedDeposit (depositForm) {
@@ -81,15 +85,25 @@ export class TransactionProcessComponent implements OnInit {
   proceedFundTransfer(fundTransferForm) {
     this.receiverId = fundTransferForm.value.receiverId;
     this.money = fundTransferForm.value.money;
+    for (let customer of this.customers) {
+      if (customer.accountId == this.receiverId) {
+        this.receiverExists = true;
+        break;
+      }
+    }
+    if (this.receiverExists && this.receiverId != this.customer.accountId) {
       if (this.customer.balance > this.money) {
         this.negativeAmount = false;
-      if (this.money > 0) {
-        this.transactionFlag = true;
+        if (this.money > 0) {
+          this.transactionFlag = true;
+        } else {
+          this.negativeAmount = true;
+        }
       } else {
-        this.negativeAmount = true;
+        this.lowBalance = true;
       }
     } else {
-      this.lowBalance = true;
+      this.invalidAccountId = true;
     }
   }
 

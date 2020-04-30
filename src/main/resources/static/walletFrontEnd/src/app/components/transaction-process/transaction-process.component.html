@@ -73,7 +73,7 @@
             <label style="color: rgba(200,200,200,0.9)" for="receiverId">Receiver's Account Id</label>
             <input type="number" name="receiverId" class="form-control number-input" ngModel #ReceiverId= "ngModel" pattern="[1-9]{1}[0-9]{7}"> 
           </div>
-          <small class="invalid-data" [hidden] = "ReceiverId.valid">
+          <small class="invalid-data" [hidden] = "ReceiverId.valid && !invalidAccountId">
             Please enter the valid Account Id
           </small>
           <div class="form group">

@@ -14,9 +14,9 @@ export class AccountService {
   private baseUrl: String = 'http://localhost:4444/XYZWallet';
   private headers = new Headers ({'Content-Type': 'application/json'});
   private options = {headers: this.headers};
-  private customer: CustomerDetails;
+  private customer: CustomerDetails = JSON.parse(localStorage.getItem('customer') || null);
   private createForm: boolean;
-  private signedIn: boolean;
+  private signedIn: boolean = JSON.parse(localStorage.getItem('signedIn') || 'false');
   private editType: number;
   private transacType: number;
   private showBalance: boolean;
@@ -80,22 +80,22 @@ export class AccountService {
     .pipe(catchError(this.errorHandler));
   }
 
-  setCustomer(customer: CustomerDetails){
-    this.customer = customer;
+  setCustomer(customer: CustomerDetails) {
+    localStorage.setItem('customer', JSON.stringify(customer));
   }
 
-  getCustomer(){
-    return this.customer;
+  getCustomer() {
+    return JSON.parse(localStorage.getItem('customer'));
   }
 
   errorHandler(error: Response) {
     return Observable.throw(error || 'SERVER ERROR');
   }
   getIsSignedIn() {
-    return this.signedIn;
+    return JSON.parse(localStorage.getItem('signedIn'));
   }
   setIsSignedIn(flag: boolean) {
-    this.signedIn = flag;
+    localStorage.setItem('signedIn', JSON.stringify(flag));
   }
 
   setEditType(editType: number) {

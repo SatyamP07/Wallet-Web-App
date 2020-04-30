@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   showAccount() {
     this._accountService.setCustomer(this.customer);
-    this._router.navigate(['/show']);
+    this._router.navigate(['/show/account']);
   }
 
 }

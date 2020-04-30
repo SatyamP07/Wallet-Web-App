@@ -178,7 +178,7 @@
         <input type="password" name="tPin" class="form-control input-tag" placeholder="****" 
         #tPin="ngModel" ngModel pattern = "[1-9]{1}[0-9]{3}"/>
         <small [hidden]= "tPin.valid || tPin.pristine">
-          Length Max: 20, Min:6
+          Length: Exact 4 digits
         </small>
         <small [hidden]= "!wrongPassword">
           Incorrect Current Transaction Pin
@@ -189,7 +189,7 @@
         <input type="password" name="tPin1" class="form-control input-tag" placeholder="****" 
         #tPin1="ngModel" ngModel pattern = "[1-9]{1}[0-9]{3}"/>
         <small [hidden]= "tPin1.valid || tPin1.pristine">
-          Length Max: 20, Min:6
+          Length: Exact 4 digits
         </small>
       </div>
       <div class = "form group">
