@@ -1,0 +1,344 @@
+Feature: User tries to create a new account
+	Senario: The user tries to create a new account.
+		Given the user is on the homepage
+		When the user clicks on the 'Create an Account' button
+		Then the user gets redirected to the form-page.
+  
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user has entered the name in the name-field
+		When the name-field contains invalid-value
+		Then the name-field corresponding validation-container displays error message
+		And the 'Next' button is disabled
+		
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user has entered the email in the email-field
+		And the name-field is valid
+		When the email-field contains invalid-value
+		Then the email-field corresponding validation-container displays error message
+		And the 'Next' button is disabled	
+
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user has entered the mobile number in the mobile-number-field
+		And the name-field and email-field are valid
+		When the mobile-number-field contains invalid-value
+		Then the mobile-number-field corresponding validation-container displays error message
+		And the 'Next' button is disabled
+
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user selects 'Aadhar Card' radio button
+		And the name-field, email-field and mobile-number-field are valid
+		And input field to give 'Aadhar Card Number' is visible
+		When the input-field contains invalid-value
+		Then the input-field corresponding validation-container displays error message
+		And the 'Next' button is disabled
+		
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user selects 'Pan Card' radio button
+		And the name-field, email-field and mobile-number-field are valid
+		And input field to give 'Pan Card Number' is visible
+		When the input-field contains invalid-value
+		Then the input-field corresponding validation-container displays error message
+		And the 'Next' button is disabled
+		
+	Senario: The user is redirected to form-page.
+			 And the user is on form-page(1)
+		Given the user has entered all the fields
+		And all the fields are valid
+		Then the 'Next' button is enable
+		And user can click on the button
+		
+	Senario: The user has clicked on the 'Next' button
+			 And the user is directed to form-page(2)
+		Given the user has entered the password in the password-field
+		When the password-field contains invalid-value
+		Then the password-field corresponding validation-container displays error message
+		
+	Senario: The user has clicked on the 'Next' button
+			 And the user is directed to form-page(2)
+		Given the user has entered the password in the confirm-password-field
+		And password-field is valid
+		And the user clicks on 'Set Password' button
+		When the confirm-password-field value and the password-field value are not same
+		Then the confirm-password-field corresponding validation-container displays error message
+		
+	Senario: The user has clicked on the 'Next' button
+			 And the user is directed to form-page(2)
+		Given the user has entered the password in the confirm-password-field
+		And password-field is valid
+		And the user clicks on 'Set Password' button
+		When the confirm-password-field value and the password-field value are same
+		Then the user is redirected to form-page(3)
+		
+	Senario: The user is redirected to form-page(3)
+		Given the user has entered the pin in the transaction-pin-field
+		When the transaction-pin-field contains invalid-value
+		Then the transaction-pin-field corresponding validation-container displays error message
+		
+	Senario: The user is redirected to form-page(3)
+		Given the user has entered the pin in the confirm-transaction-pin-field
+		And transaction-pin-field is valid
+		And the user clicks on 'Set Transaction Pin' button
+		When the confirm-transaction-pin-field value and the transaction-pin-field value are not same
+		Then the confirm-transaction-pin-field corresponding validation-container displays error message
+		
+	Senario: The user is redirected to form-page(3)
+		Given the user has entered the password in the confirm-transaction-pin-field
+		And transaction-pin-field is valid
+		And the user clicks on 'Set Transaction Pin' button
+		When the confirm-transaction-pin-field value and the password-field value are same
+		Then the user's account is created
+		And the user is logged in to the account
+		And the user is redirected to the show-account-page
+
+Feature: User tries to Login
+	Senario: User is on the homepage
+			 And the user is not logged in 
+		When user clicks on the 'Login' button
+		Then a view to enter account-id and password shows up.
+		
+	Senario: The user has clicked on login button
+			 And the login view is visible
+		Given the user has entered the account-id and password
+		And the user clicks on the login button
+		When the account-id and password is invalid-value
+		Then the corresponding validation-container displays error message
+
+	Senario: The user has clicked on login button
+			 And the login view is visible
+		Given the user has entered the account-id and password
+		And the user clicks on the login button
+		When the account-id and password is valid
+		Then the user gets logged in
+		And the user gets redirected to account-page
+		
+	Senario: The user has clicked on login button
+			 And the login view is visible
+		Given the user clicks on 'Admin login' button
+		Then the view for user-login disappears 
+		And the view for admin-login appears
+		
+Feature: User uses edit features
+	Senario: The user is logged in 
+		Given that the user is redirected to account-details page
+		When the user clicks on the 'Edit' button
+		Then the 3 more options will be visible
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Edit' button
+		And 3 more options are visible
+		When the user clicks on the 'Account Details' button
+		Then the user gets redirected to edit-account-details-page
+		And the original details are already entered in all the fields
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-account-details-page
+		When the user changes any one of all fields
+		And the entered data in that field is invalid-value
+		Then the corresponding validation-container displays error message
+		And the 'Save' button gets disabled
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-account-details-page
+		When the user changes and field
+		And the enter data in that field is valid-value
+		And the 'Save' button gets enabled 
+		And the user click on 'Save' button
+		Then the user's account's details gets updated
+		And the user gets redirected to account-details-page
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Edit' button
+		And 3 more options are visible
+		When the user clicks on the 'Account Password' button
+		Then the user gets redirected to edit-account-password-page
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-account-password-page
+		When the user enters details in the fields
+		And the entered data in any of the field is invalid-value
+		And the user clicks on 'Change Password' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-account-password-page
+		When the user enters details in the fields
+		And the entered data in all the fields are valid-value
+		And the user click on 'Change Password' button
+		Then the user's account's password gets changed
+		And the user gets redirected to account-details-page
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Edit' button
+		And 3 more options are visible
+		When the user clicks on the 'Transaction Pin' button
+		Then the user gets redirected to edit-transaction-pin-page
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-transaction-pin-page
+		When the user enters details in the fields
+		And the entered data in any of the field is invalid-value
+		And the user clicks on 'Change Transaction Pin' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in 
+		Given that the user is redirected to edit-transaction-pin-page
+		When the user enters details in the fields
+		And the entered data in all the fields are valid-value
+		And the user click on 'Change Transaction Pin' button
+		Then the user's account's transaction pin gets changed
+		And the user gets redirected to account-details-page
+
+Feature: User users the feature to show details
+	Senario: The user is logged in
+		Given that the user is redirected to show-account-page
+		When the user clicks on 'Show Balance' button
+		Then a view that shows the user's account's balance appears
+		
+	Senario: The user is logged in
+		Given that the user is redirected to show-account-page
+		When the user clicks on 'Account Details' button
+		Then a view that shows the user's account's details appears
+		
+	Senario: The user is logged in
+		Given that the user is redirected to show-account-page
+		When the user clicks on 'Transactions' button
+		Then a view that shows the user's account's all transactions appears
+		
+Feature: User users the trasaction processes
+	Senario: The user is logged in 
+		Given that the user is redirected to account-details page
+		When the user clicks on the 'Transaction Processes' button
+		Then the 3 more options will be visible
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Transaction Processes' button
+		And 3 more options are visible
+		When the user clicks on the 'Deposit' button
+		Then the user gets redirected to deposit-page
+		
+	Senario: The user is logged in
+			 And is redirected to deposit-page
+		Given the user has entered the amount to deposit in the field
+		When the entered amount in the field is invalid-value
+		And user clicks on 'Proceed' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to deposit-page
+		Given the user has entered the amount to deposit in the field
+		When the entered amount in the field is valid-value
+		And user clicks on 'Proceed' button
+		Then the user gets redirected to enter-transaction-pin-page
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is invalid-value
+		And user clicks on 'Deposit' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is valid-value
+		And user clicks on 'Deposit' button
+		Then the deposit process get completed 
+		And the user's account's balance gets updated
+		And the user gets redirected to show-account-page
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Transaction Processes' button
+		And 3 more options are visible
+		When the user clicks on the 'Withdraw' button
+		Then the user gets redirected to withdraw-page
+		
+	Senario: The user is logged in
+			 And is redirected to withdraw-page
+		Given the user has entered the amount to withdraw in the field
+		When the entered amount in the field is invalid-value
+		And user clicks on 'Proceed' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to withdraw-page
+		Given the user has entered the amount to withdraw in the field
+		When the entered amount in the field is valid-value
+		And user clicks on 'Proceed' button
+		Then the user gets redirected to enter-transaction-pin-page
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is invalid-value
+		And user clicks on 'Withdraw' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is valid-value
+		And user clicks on 'Withdraw' button
+		Then the withdraw process get completed 
+		And the user's account's balance gets updated
+		And the user gets redirected to show-account-page
+		
+	Senario: The user is logged in 
+		Given that the user has clicked on 'Transaction Processes' button
+		And 3 more options are visible
+		When the user clicks on the 'Fund Transfer' button
+		Then the user gets redirected to fund-transfer-page
+		
+	Senario: The user is logged in
+			 And is redirected to fund-transfer-page
+		Given the user has entered the amount to transfer in the field and receiver's account id
+		When any of the entered field has invalid-value
+		And user clicks on 'Proceed' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to fund-transfer-page
+		Given the user has entered the amount to transfer in the field and receiver's account id
+		When all of the entered field has valid-value
+		And user clicks on 'Proceed' button
+		Then the user gets redirected to enter-transaction-pin-page
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is invalid-value
+		And user clicks on 'Fund Transfer' button
+		Then the corresponding validation-container displays error message
+		
+	Senario: The user is logged in
+			 And is redirected to enter-transaction-pin-page
+		Given the user has entered the transaction-pin in the field
+		When the entered transaction-pin in the field is valid-value
+		And user clicks on 'Fund Transfer' button
+		Then the Fund Transfer process get completed 
+		And the user's account's balance gets updated
+		And the user gets redirected to show-account-page
+		
+	
+Feature: User logouts or deactivates the account.
+	Senario: User is logged in
+		Given that user is on any of show-account-page
+		When the user clicks on the 'Logout' button
+		Then a confirmation dialog box appears
+		And if confirmed 
+		Then user logs out the account 
+		And the user gets redirected to homepage
+		
+	Senario: User is logged in
+		Given that user is on any of show-account-page
+		When the user clicks on the 'Delete Account' button
+		Then a confirmation dialog box appears
+		And if confirmed 
+		Then user logs out the account
+		And the account gets deleted permanently
+		And the user gets redirected to homepage
+	

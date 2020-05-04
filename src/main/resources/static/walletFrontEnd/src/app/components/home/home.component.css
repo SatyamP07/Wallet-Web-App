@@ -4,6 +4,12 @@
     color: rgba(255,255,255,0.65);
 }
 
+.btn-border {
+    margin-left: 60px;
+    border-color: rgba(50, 50, 240, 0.9);
+    border-width: 3px;
+}
+
 .flex-container {
     display: inline-flex;
   }

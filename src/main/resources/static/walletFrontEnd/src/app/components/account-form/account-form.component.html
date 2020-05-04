@@ -34,10 +34,10 @@
           <input type="radio" name="nationalityType" value="Pan Card" #nationalityType="ngModel" ngModel (click)="checkNationality('PanCard')" style="margin-left: 30px;"> Pan Card
         </div>
         <div class = "form group" *ngIf = "nationality == 1">
-          <input type="text" name="nationalityNumber" class="form-control input-tag" placeholder="16 digit Aadhar Card Number" 
-          #nationalityNumber="ngModel" ngModel pattern = "[0-9]{16}"/>
+          <input type="text" name="nationalityNumber" class="form-control input-tag" placeholder="12 digit Aadhar Card Number" 
+          #nationalityNumber="ngModel" ngModel pattern = "[0-9]{12}"/>
           <small [hidden]= "nationalityNumber.valid || nationalityNumber.pristine">
-            Should contain only digits. Length: Exact 16 digits
+            Should contain only digits. Length: Exact 12 digits
           </small>
         </div>
         <div class = "form group" *ngIf = "nationality == 2">
@@ -107,7 +107,7 @@
 <div *ngIf = "isSignedIn">
   <div *ngIf = "editType == 1">
     <form (ngSubmit)="editDetails()" #detailsForm= "ngForm">
-      <h2>Create an Account</h2>
+      <h2>Edit an Account</h2>
       <div class ="form group">
         <label for="name">Name</label>
         <input type="text" name="name" class="form-control input-tag" placeholder="Steve Woz" 
@@ -133,7 +133,7 @@
         </small>
       </div>
       <br>
-      <input type="submit" class="btn btn-tag" value="Next" [disabled]="!detailsForm.form.valid">
+      <input type="submit" class="btn btn-tag" value="Save" [disabled]="!detailsForm.form.valid">
     </form>
   </div>
 

@@ -1,56 +1,58 @@
 <h1 style="color: rgba(255, 255, 255, 0.8);">Transaction Processes</h1>
-<div style="margin-left: 20px; margin-top: 30px;">
+<div style="margin-left: 20px; margin-top: 10px;">
   <div *ngIf = "transactionType==1 && !transactionFlag">
-      <form (ngSubmit)="proceedDeposit(depositForm)" #depositForm = "ngForm">
-          <div class="form group">
-              <label style="color: rgba(200,200,200,0.9)" for="money">Amount to be Deposited</label>
-              <input type="number" name="money" class="form-control number-input" ngModel 
-              #MoneyD="ngModel" pattern="[0-9]{1,6}"> 
-          </div>
-          <small [hidden] = "MoneyD.valid || MoneyD.pristine" class="invalid-data">
-              Please enter valid amount.
-          </small>
-          <small [hidden] = "!negativeAmount" class="invalid-data" class="invalid-data">
-              Please enter positive amount.
-          </small>
-          <br><br>
-          <input type="submit" value="Proceed" class="btn btn-primary btn-style" [disabled] = "!depositForm.form.valid">
-      </form>
+    <form (ngSubmit)="proceedDeposit(depositForm)" #depositForm = "ngForm">
+      <h2><u>Deposit</u></h2>
+      <div class="form group">
+          <label style="color: rgba(200,200,200,0.9)" for="money">Amount to be Deposited</label>
+          <input type="number" name="money" class="form-control number-input" ngModel 
+          #MoneyD="ngModel" pattern="[0-9]{1,6}"> 
+      </div>
+      <small [hidden] = "MoneyD.valid || MoneyD.pristine" class="invalid-data">
+          Please enter valid amount.
+      </small>
+      <small [hidden] = "!negativeAmount" class="invalid-data" class="invalid-data">
+          Please enter positive amount.
+      </small>
+      <br><br>
+      <input type="submit" value="Proceed" class="btn btn-primary btn-style" [disabled] = "!depositForm.form.valid">
+    </form>
   </div>
 
   <div *ngIf = "(transactionType == 1 && transactionFlag)">
-      <form (ngSubmit)="deposit(depositForm)" #depositForm="ngForm">
-        <div class="form group">
-          <label style="color: rgba(200,200,200,0.9)" for="tPin">Enter Transaction Pin to proceed...</label>
-          <input type="password" name="tPin" class="form-control" ngModel #tpin="ngModel" patten="[0-9]{4}"> 
-        </div>
-        <small class="invalid-data" [hidden]= "!wrongPassword && tpin.valid" class="invalid-data">
-          Please enter the correct Transaction Pin
-        </small>
-        <br>
-        <input type="submit" value="Deposit" class="btn btn-primary btn-style" [disabled]= "!depositForm.form.valid">
-      </form>
-    </div>
+    <form (ngSubmit)="deposit(depositForm)" #depositForm="ngForm">
+      <div class="form group">
+        <label style="color: rgba(200,200,200,0.9)" for="tPin">Enter Transaction Pin to proceed...</label>
+        <input type="password" name="tPin" class="form-control" ngModel #tpin="ngModel" patten="[0-9]{4}"> 
+      </div>
+      <small class="invalid-data" [hidden]= "!wrongPassword && tpin.valid" class="invalid-data">
+        Please enter the correct Transaction Pin
+      </small>
+      <br>
+      <input type="submit" value="Deposit" class="btn btn-primary btn-style" [disabled]= "!depositForm.form.valid">
+    </form>
+  </div>
 
   <div *ngIf = "transactionType==2 && !transactionFlag">
-      <form (ngSubmit)="proceedWithdraw(withdrawForm)" #withdrawForm = "ngForm">
-          <div class="form group">
-              <label style="color: rgba(200,200,200,0.9)" for="money">Amount to be Withdrawed</label>
-              <input type="number" name="money" class="form-control number-input" ngModel
-              #MoneyW="ngModel" pattern="[0-9]{1,6}"> 
-          </div>
-          <small [hidden] = "MoneyW.valid || MoneyW.pristine" class="invalid-data">
-              Please enter valid amount.
-          </small>
-          <small [hidden] = "!lowBalance" class="invalid-data">
-              Your balance is less than the amount you want to transact.
-          </small>
-          <small [hidden] = "!negativeAmount" class="invalid-data">
-            Please enter positive amount.
-          </small>
-          <br>
-          <input type="submit" value="Proceed" class="btn btn-primary btn-style" [disabled] = "!withdrawForm.form.valid">
-      </form>
+    <form (ngSubmit)="proceedWithdraw(withdrawForm)" #withdrawForm = "ngForm">
+      <h2><u>Withdraw</u></h2>  
+      <div class="form group">
+          <label style="color: rgba(200,200,200,0.9)" for="money">Amount to be Withdrawed</label>
+          <input type="number" name="money" class="form-control number-input" ngModel
+          #MoneyW="ngModel" pattern="[0-9]{1,6}"> 
+      </div>
+      <small [hidden] = "MoneyW.valid || MoneyW.pristine" class="invalid-data">
+          Please enter valid amount.
+      </small>
+      <small [hidden] = "!lowBalance" class="invalid-data">
+          Your balance is less than the amount you want to transact.
+      </small>
+      <small [hidden] = "!negativeAmount" class="invalid-data">
+        Please enter positive amount.
+      </small>
+      <br>
+      <input type="submit" value="Proceed" class="btn btn-primary btn-style" [disabled] = "!withdrawForm.form.valid">
+    </form>
   </div>
 
   <div *ngIf = "transactionType==2 && transactionFlag">
@@ -69,6 +71,7 @@
 
   <div *ngIf = "transactionType==3 && !transactionFlag">
       <form (ngSubmit)="proceedFundTransfer(fundTransferForm)" #fundTransferForm= "ngForm">
+        <h2><u>Fund Transfer</u></h2>
           <div class="form group">
             <label style="color: rgba(200,200,200,0.9)" for="receiverId">Receiver's Account Id</label>
             <input type="number" name="receiverId" class="form-control number-input" ngModel #ReceiverId= "ngModel" pattern="[1-9]{1}[0-9]{7}"> 
@@ -90,7 +93,7 @@
             Please enter valid amount.
           </small>
           <br>
-          <input type="submit" value="Submit" class="btn btn-success btn-style" [disabled] = "!fundTransferForm.form.valid">
+          <input type="submit" value="Submit" class="btn btn-primary btn-style" [disabled] = "!fundTransferForm.form.valid">
         </form>
   </div>
 
