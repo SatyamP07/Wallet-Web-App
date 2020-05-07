@@ -27,7 +27,6 @@ export class AccountFormComponent implements OnInit {
 
   ngOnInit() {
     this.isSignedIn = this._accountService.getIsSignedIn();
-    console.log(this.isSignedIn);
     if (this.isSignedIn) {
       this.customer = this._accountService.getCustomer();
     } else {
@@ -54,8 +53,6 @@ export class AccountFormComponent implements OnInit {
     this.customer.mobileNumber = detailsForm.value.mobileNumber;
     this.customer.nationalIdType = detailsForm.value.nationalityType;
     this.customer.nationalIdNumber = detailsForm.value.nationalityNumber;
-    console.log(detailsForm.value.nationalityType);
-    console.log(detailsForm.value.nationalityNumber);
     this.formCount = 1;
   }
   setPassword(passwordForm) {
@@ -76,13 +73,9 @@ export class AccountFormComponent implements OnInit {
     if (this.transactionPins[0] == this.transactionPins[1]) {
       this.customer.transactionPin = this.transactionPins[0];
       this.passwordsNotMatched = false;
-      console.log(this.customer);
       this._accountService.createAccount(this.customer).subscribe((customer) => {
         this.customer.accountId = customer.accountId;
         this.customer.balance = customer.balance;
-        console.log(this.customer);
-      }, (error) => {
-        console.log(error);
       });
       setTimeout(() => {
         this._accountService.setCustomer(this.customer);
@@ -105,11 +98,7 @@ export class AccountFormComponent implements OnInit {
       this.passwords[1] = passwordForm.value.password2;
       if (this.passwords[0] == this.passwords[1]) {
         this.customer.accountPassword = this.passwords[0];
-        console.log(this.customer);
         this._accountService.updateAccount(this.customer).subscribe((customer) => {
-          console.log(customer);
-        }, (error) => {
-          console.log(error);
         });
         setTimeout(() => {
           this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
@@ -133,12 +122,7 @@ export class AccountFormComponent implements OnInit {
       this.transactionPins[1] = tPinForm.value.tPin2;
       if (this.transactionPins[0] == this.transactionPins[1]) {
         this.customer.transactionPin = this.transactionPins[0];
-        console.log(this.customer);
-        this._accountService.updateAccount(this.customer).subscribe((customer) => {
-          console.log(customer);
-        }, (error) => {
-          console.log(error);
-        });
+        this._accountService.updateAccount(this.customer).subscribe();
         setTimeout(() => {
           this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
             this._accountService.setCustomer(customer);
@@ -156,11 +140,9 @@ export class AccountFormComponent implements OnInit {
   checkNationality(nationalityProof) {
     if (nationalityProof == 'AadharCard') {
       this.nationality = 1;
-      console.log(this.nationality);
     }
     if (nationalityProof == 'PanCard') {
       this.nationality = 2;
-      console.log(this.nationality);
     }
   }
 }

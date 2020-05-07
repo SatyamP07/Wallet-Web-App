@@ -1,8 +1,7 @@
 import { CustomerDetails } from './../../customer-details';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AccountService } from './../../services/account.service';
 import { Component, OnInit } from '@angular/core';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-show-account',
@@ -18,13 +17,11 @@ export class ShowAccountComponent implements OnInit {
   ngOnInit() {
     this._accountService.setIsSignedIn(true);
     this.customer = this._accountService.getCustomer();
-    console.log(this.customer);
   }
 
   showDetails() {
     this._accountService.setShowBalance(false);
     this._router.navigate(['/show/account']);
-    console.log("details");
   }
 
   editAccount() {
@@ -50,7 +47,6 @@ export class ShowAccountComponent implements OnInit {
   showBalance() {
     this._accountService.setShowBalance(true);
     this._router.navigate(['/show/account']);
-    console.log("balance");
   }
 
   transactions() {

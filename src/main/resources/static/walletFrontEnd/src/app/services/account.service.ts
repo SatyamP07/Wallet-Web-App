@@ -1,10 +1,8 @@
 import { CustomerDetails } from './../customer-details';
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 
 import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,61 +21,51 @@ export class AccountService {
   constructor(private _http: Http) { }
 
   getAccounts() {
-    return this._http.get(this.baseUrl + '/accounts', this.options).pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+    return this._http.get(this.baseUrl + '/accounts', this.options).pipe(map((response: Response) => response.json()));
   }
 
   getAccount(id: Number) {
-    return this._http.get(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+    return this._http.get(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json()));
   }
 
   deleteAccount(id: Number) {
-    return this._http.delete(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+    return this._http.delete(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json()));
   }
 
   createAccount(customer: CustomerDetails) {
     return this._http.post(this.baseUrl + '/account', JSON.stringify(customer), this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   updateAccount(customer: CustomerDetails) {
     return this._http.put(this.baseUrl + '/account', JSON.stringify(customer), this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   deposit(accountId: Number, money: Number) {
     return this._http.put(this.baseUrl + '/account/' + accountId + '/deposit/' + money, this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   withdraw(accountId: Number, money: Number) {
     return this._http.put(this.baseUrl + '/account/' + accountId + '/withdraw/' + money, this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   fundTransfer(accountId: Number, money: Number, receiverId: Number) {
     return this._http.put(this.baseUrl + '/account/' + accountId + '/fundTransfer/' + receiverId + '/' + money,
                          [JSON.stringify(money), JSON.stringify(receiverId)], this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   printTransactions(accountId: Number) {
     return this._http.get(this.baseUrl + '/account/' + accountId + '/printTransactions', this.options)
-      .pipe(map((response: Response) => response.json()))
-      .pipe(catchError(this.errorHandler));
+      .pipe(map((response: Response) => response.json()));
   }
 
   getSignedInAccount() {
     this.setIsSignedIn(true);
-    return this._http.get(this.baseUrl + '/account/signedIn', this.options).pipe(map((response: Response) => response.json()))
-    .pipe(catchError(this.errorHandler));
+    return this._http.get(this.baseUrl + '/account/signedIn', this.options).pipe(map((response: Response) => response.json()));
   }
 
   setCustomer(customer: CustomerDetails) {
@@ -88,9 +76,6 @@ export class AccountService {
     return JSON.parse(localStorage.getItem('customer'));
   }
 
-  errorHandler(error: Response) {
-    return Observable.throw(error || 'SERVER ERROR');
-  }
   getIsSignedIn() {
     return JSON.parse(localStorage.getItem('signedIn'));
   }
@@ -102,7 +87,7 @@ export class AccountService {
     this.editType = editType;
   }
   getEditType() {
-    return this.editType
+    return this.editType;
   }
 
   setTransacType(type: number) {

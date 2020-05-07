@@ -1,8 +1,6 @@
 package com.wallet.app.controller;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wallet.app.daoLayer.WalletDaoInterface;
 import com.wallet.app.models.CustomerDetails;
 import com.wallet.app.models.TransactionDetails;
 import com.wallet.app.serviceLayer.WalletServiceInterface;

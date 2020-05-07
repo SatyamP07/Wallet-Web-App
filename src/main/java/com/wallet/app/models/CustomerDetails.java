@@ -2,8 +2,6 @@ package com.wallet.app.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "C_Data_V1")
+@Table(name = "Customer_data")
 @SequenceGenerator(name = "accountSequence", initialValue = 10000000)
 public class CustomerDetails {
 	@Id

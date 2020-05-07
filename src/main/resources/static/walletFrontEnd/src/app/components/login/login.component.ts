@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
     } else {
       for(let i=0; i < this.customers.length; i++) {
         if (this.accountId == this.customers[i].accountId) {
-          console.log(this.customers[i].accountId);
           this.accountExists = true;
           break;
          }
@@ -60,10 +59,8 @@ export class LoginComponent implements OnInit {
         this.accountExists = false;
         this._accountService.getAccount(this.accountId).subscribe((customer) => this.customer = customer);
         setTimeout(() => {
-          console.log(this.customer);
           if ( this.password == this.customer.accountPassword) {
             setTimeout(() => {
-              console.log(this.customer);
               this._accountService.setCustomer(this.customer);
               this._accountService.setIsSignedIn(true);
             this._router.navigate(['/show/account']);
