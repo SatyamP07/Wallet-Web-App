@@ -31,6 +31,8 @@
       <br>
       <input type="submit" value="Deposit" class="btn btn-primary btn-style" [disabled]= "!depositForm.form.valid">
     </form>
+    <br><br>
+    <h2 *ngIf = "(success)">Success!!</h2>
   </div>
 
   <div *ngIf = "transactionType==2 && !transactionFlag">
@@ -67,6 +69,8 @@
           <br>
           <input type="submit" value="Withdraw" class="btn btn-primary btn-style" [disabled]= "!withdrawForm.form.valid">
       </form>
+      <br><br>
+      <h2 *ngIf = "(success)">Success!!</h2>
   </div>
 
   <div *ngIf = "transactionType==3 && !transactionFlag">
@@ -109,5 +113,7 @@
           <br>
           <input type="submit" value="Fund Transfer" class="btn btn-primary btn-style" [disabled]= "!fundTransferForm.form.valid">
       </form>
+      <br><br>
+      <h2 *ngIf = "(success)">Success!!</h2>
   </div>
 </div>

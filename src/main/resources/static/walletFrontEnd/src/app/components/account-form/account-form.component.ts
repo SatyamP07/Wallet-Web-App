@@ -18,6 +18,7 @@ export class AccountFormComponent implements OnInit {
   private passwordsNotMatched: boolean;
   private wrongPassword: boolean;
   private nationality: number = 0;
+  private passwordFlag: boolean;
 
   constructor(private _accountService: AccountService, private _router: Router) {
     this._router.routeReuseStrategy.shouldReuseRoute = function() {
@@ -80,61 +81,75 @@ export class AccountFormComponent implements OnInit {
       setTimeout(() => {
         this._accountService.setCustomer(this.customer);
       this._accountService.setIsSignedIn(true);
+      alert('Account Created!');
       this._router.navigate(['/show/account']);
       }, 2000);
     }
   }
 
   editDetails () {
-    this._accountService.updateAccount(this.customer).subscribe();
+    setTimeout(() => {
+    this._accountService.updateAccount(this.customer).subscribe(customer => this._accountService.setCustomer(customer));
+    alert('Details Changed Successfully!');
     this._router.navigate(['/show/account']);
+    }, 2000);
   }
 
   editPassword(passwordForm) {
     this.wrongPassword = false;
     this.passwordsNotMatched = false;
-    if (this.customer.accountPassword == passwordForm.value.password) {
-      this.passwords[0] = passwordForm.value.password1;
-      this.passwords[1] = passwordForm.value.password2;
-      if (this.passwords[0] == this.passwords[1]) {
-        this.customer.accountPassword = this.passwords[0];
-        this._accountService.updateAccount(this.customer).subscribe((customer) => {
-        });
-        setTimeout(() => {
-          this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
-            this._accountService.setCustomer(customer);
+    this._accountService.checkAccountPassword(passwordForm.value.password, this.customer.accountId)
+      .subscribe(flag => this.passwordFlag = true, err => this.passwordFlag = false);
+    setTimeout(() => {
+      if (this.passwordFlag) {
+        this.passwords[0] = passwordForm.value.password1;
+        this.passwords[1] = passwordForm.value.password2;
+        if (this.passwords[0] == this.passwords[1]) {
+          this.customer.accountPassword = this.passwords[0];
+          this._accountService.updateAccount(this.customer).subscribe((customer) => {
           });
-          this._router.navigate(['/show/account']);
-        }, 4000);
+          setTimeout(() => {
+            this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
+              this._accountService.setCustomer(customer);
+            });
+            alert('Password Changed Successfully!');
+            this._router.navigate(['/show/account']);
+          }, 2000);
+        } else {
+          this.passwordsNotMatched = true;
+        }
       } else {
-        this.passwordsNotMatched = true;
+        this.wrongPassword = true;
       }
-    } else {
-      this.wrongPassword = true;
-    }
+    }, 2000);
   }
 
   editTPin(tPinForm) {
     this.wrongPassword = false;
     this.passwordsNotMatched = false;
-    if (this.customer.transactionPin == tPinForm.value.tPin) {
-      this.transactionPins[0] = tPinForm.value.tPin1;
-      this.transactionPins[1] = tPinForm.value.tPin2;
-      if (this.transactionPins[0] == this.transactionPins[1]) {
-        this.customer.transactionPin = this.transactionPins[0];
-        this._accountService.updateAccount(this.customer).subscribe();
-        setTimeout(() => {
-          this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
-            this._accountService.setCustomer(customer);
-          });
-          this._router.navigate(['/show/account']);
-        }, 2000);
+    this._accountService.checkTransactionPin(tPinForm.value.tPin, this.customer.accountId)
+      .subscribe(flag => this.passwordFlag = true, err => this.passwordFlag = false);
+    setTimeout(() => {
+      if (this.passwordFlag) {
+        this.transactionPins[0] = tPinForm.value.tPin1;
+        this.transactionPins[1] = tPinForm.value.tPin2;
+        if (this.transactionPins[0] == this.transactionPins[1]) {
+          this.customer.transactionPin = this.transactionPins[0];
+          this._accountService.updateAccount(this.customer).subscribe();
+          setTimeout(() => {
+            this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
+              this._accountService.setCustomer(customer);
+            });
+            alert('Password Changed Successfully!');
+            this._router.navigate(['/show/account']);
+          }, 2000);
+        } else {
+          this.passwordsNotMatched = true;
+        }
       } else {
-        this.passwordsNotMatched = true;
+        this.wrongPassword = true;
       }
-    } else {
-      this.wrongPassword = true;
-    }
+    }, 2000);
   }
 
   checkNationality(nationalityProof) {

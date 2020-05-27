@@ -2,7 +2,8 @@ import { CustomerDetails } from './../customer-details';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class AccountService {
   }
 
   getAccount(id: Number) {
-    return this._http.get(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json()));
+    return this._http.get(this.baseUrl + '/account/' + id, this.options).pipe(map((response: Response) => response.json())).pipe(
+      catchError(this.handleError));
   }
 
   deleteAccount(id: Number) {
@@ -68,6 +70,16 @@ export class AccountService {
     return this._http.get(this.baseUrl + '/account/signedIn', this.options).pipe(map((response: Response) => response.json()));
   }
 
+  checkAccountPassword(password: String, accountId: number) {
+    return this._http.post(this.baseUrl + '/account/' + accountId + '/checkAccountPassword', JSON.stringify(password), this.options)
+      .pipe(map((response: Response) => response.json())).pipe(catchError(this.handleError));
+  }
+
+  checkTransactionPin(password: String, accountId: number) {
+    return this._http.post(this.baseUrl + '/account/' + accountId + '/checkTransactionPin', JSON.stringify(password), this.options)
+      .pipe(map((response: Response) => response.json())).pipe(catchError(this.handleError));
+  }
+
   setCustomer(customer: CustomerDetails) {
     localStorage.setItem('customer', JSON.stringify(customer));
   }
@@ -103,6 +115,20 @@ export class AccountService {
 
   getShowBalance() {
     return this.showBalance;
+  }
+
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+      console.log("from client side");
+    } else {
+      // server-side error
+      errorMessage = `Error: ${error.error.errorMessage}`;
+    }
+    console.log(error.error.errorMessage);
+    return throwError(error);
   }
 }
 

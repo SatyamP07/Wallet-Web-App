@@ -26,10 +26,14 @@ public class WalletServiceImpl implements WalletServiceInterface {
 
 	@Override
 	public CustomerDetails updateAccount(CustomerDetails customer) {
-		String encryptedPassword = new String(passwordEncryptor(customer.getAccountPassword().getBytes()));
-		customer.setAccountPassword(encryptedPassword);
-		String encryptedTpin = new String(passwordEncryptor(customer.getTransactionPin().getBytes()));
-		customer.setTransactionPin(encryptedTpin);
+		if(!customer.getAccountPassword().equals(walletRepository.findById(customer.getAccountId()).get().getAccountPassword())) {
+			String encryptedPassword = new String(passwordEncryptor(customer.getAccountPassword().getBytes()));
+			customer.setAccountPassword(encryptedPassword);
+		}
+		if(!customer.getTransactionPin().equals(walletRepository.findById(customer.getAccountId()).get().getTransactionPin())) {
+			String encryptedTpin = new String(passwordEncryptor(customer.getTransactionPin().getBytes()));
+			customer.setTransactionPin(encryptedTpin);
+		}
 		return walletRepository.save(customer);
 	}
 
@@ -41,32 +45,13 @@ public class WalletServiceImpl implements WalletServiceInterface {
 
 	@Override
 	public CustomerDetails getAccountById(int accountId) {
-		CustomerDetails customer = walletRepository.findById(accountId).get();
-		String decryptedPassword = new String(passwordDecryptor(customer.getAccountPassword().getBytes()));
-		customer.setAccountPassword(decryptedPassword);
-		String decryptedTpin = new String(passwordDecryptor(customer.getTransactionPin().getBytes()));
-		customer.setTransactionPin(decryptedTpin);
-		return customer;
+		return walletRepository.findById(accountId).get();
 	}
 
 	@Override
 	public List<CustomerDetails> getAllAccounts() {
 		List<CustomerDetails> allAccounts =  walletRepository.findAll();
-		List<CustomerDetails> allCustomers = allAccounts.stream().map((account) -> {
-			CustomerDetails customer = new CustomerDetails();
-			customer.setAccountId(account.getAccountId());
-			customer.setName(account.getName());
-			customer.setBalance(account.getBalance());
-			customer.seteMail(account.geteMail());
-			customer.setMobileNumber(account.getMobileNumber());
-			customer.setTransactionDetails(account.getTransactionDetails());
-			String password = new String(passwordDecryptor(account.getAccountPassword().getBytes()));
-			customer.setAccountPassword(password);
-			String tPin = new String(passwordDecryptor(account.getTransactionPin().getBytes()));
-			customer.setTransactionPin(tPin);
-			return customer;
-		}).collect(Collectors.toList());
-		return allCustomers;
+		return allAccounts;
 	}
 
 	@Override
@@ -156,5 +141,29 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		}
 		return decrypted;
 	}
-
+	
+	@Override
+	public boolean isCustomerExits(int accountId) {
+		List<CustomerDetails> customers= walletRepository.findAll();
+		boolean check=false;
+		for(CustomerDetails customer:customers) {
+			if(customer.getAccountId() == accountId) {
+				check=true;
+				break;
+			}
+		}
+		return check;
+	}
+	
+	@Override
+	public boolean isAccountPasswordCorrect(int accountId, String password) {
+		boolean flag = new String(passwordEncryptor(password.getBytes())).equals(walletRepository.findById(accountId).get().getAccountPassword());
+		return flag;
+	}
+	
+	@Override
+	public boolean isTransactionPinCorrect(int accountId, String password) {
+		boolean flag = new String(passwordEncryptor(password.getBytes())).equals(walletRepository.findById(accountId).get().getTransactionPin());
+		return flag;
+	}
 }

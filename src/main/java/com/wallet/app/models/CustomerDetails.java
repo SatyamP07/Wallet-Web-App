@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Customer_data")
-@SequenceGenerator(name = "accountSequence", initialValue = 10000000)
+@SequenceGenerator(name = "accountSequence", initialValue = 10000000, allocationSize = 1)
 public class CustomerDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accountSequence")

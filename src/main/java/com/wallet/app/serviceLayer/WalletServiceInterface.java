@@ -22,4 +22,8 @@ public interface WalletServiceInterface {
 	
 	byte[] passwordEncryptor(byte[] password);
 	byte[] passwordDecryptor(byte[] encrypted);
+	
+	boolean isCustomerExits(int accountId);
+	boolean isAccountPasswordCorrect(int accountId, String password);
+	boolean isTransactionPinCorrect(int accountId, String password);
 }

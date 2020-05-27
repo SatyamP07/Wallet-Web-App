@@ -13,6 +13,7 @@ export class TransactionProcessComponent implements OnInit {
   private customers: CustomerDetails[];
   private transactionType: number;
   private transactionFlag: boolean;
+  private tpinFlag: boolean;
   private money: number;
   private wrongPassword: boolean;
   private lowBalance: boolean;
@@ -20,6 +21,7 @@ export class TransactionProcessComponent implements OnInit {
   private receiverId: number;
   private receiverExists: boolean;
   private invalidAccountId: boolean;
+  private success: boolean = false;
 
   constructor(private _accountService: AccountService, private _router: Router) { }
 
@@ -40,17 +42,23 @@ export class TransactionProcessComponent implements OnInit {
   }
 
   deposit(depositForm) {
-    if (this.customer.transactionPin == depositForm.value.tPin) {
-      this._accountService.deposit(this.customer.accountId, this.money).subscribe();
-      setTimeout(() => {
-        this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
-          this._accountService.setCustomer(customer);
-        });
-      }, 4000);
-      this._router.navigate(['/show/account']);
-    } else {
-      this.wrongPassword = true;
-    }
+    this.wrongPassword = false;
+    this._accountService.checkTransactionPin(depositForm.value.tPin, this.customer.accountId)
+      .subscribe(flag => this.tpinFlag = true, err => this.tpinFlag = false);
+    setTimeout(() => {
+      if (this.tpinFlag) {
+        this._accountService.deposit(this.customer.accountId, this.money).subscribe();
+        this.success = true;
+        setTimeout(() => {
+          this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
+            this._accountService.setCustomer(customer);
+            this._router.navigate(['/show/account']);
+          });
+        }, 2000);
+      } else {
+        this.wrongPassword = true;
+      }
+    }, 2000);
   }
 
   proceedWithdraw(withdrawForm) {
@@ -69,17 +77,23 @@ export class TransactionProcessComponent implements OnInit {
   }
 
   withdraw(withdrawForm) {
-    if (this.customer.transactionPin == withdrawForm.value.tPin) {
-      this._accountService.withdraw(this.customer.accountId, this.money).subscribe();
-      setTimeout(() => {
-        this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
-          this._accountService.setCustomer(customer);
-        });
-      }, 4000);
-      this._router.navigate(['/show/account']);
-    } else {
-      this.wrongPassword = true;
-    }
+    this.wrongPassword = false;
+    this._accountService.checkTransactionPin(withdrawForm.value.tPin, this.customer.accountId)
+      .subscribe(flag => this.tpinFlag = true, err => this.tpinFlag = false);
+    setTimeout(() => {
+      if (this.tpinFlag) {
+        this._accountService.withdraw(this.customer.accountId, this.money).subscribe();
+        this.success = true;
+        setTimeout(() => {
+          this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
+            this._accountService.setCustomer(customer);
+            this._router.navigate(['/show/account']);
+          });
+        }, 2000);
+      } else {
+        this.wrongPassword = true;
+      }
+    }, 2000);
   }
 
   proceedFundTransfer(fundTransferForm) {
@@ -88,6 +102,7 @@ export class TransactionProcessComponent implements OnInit {
     for (let customer of this.customers) {
       if (customer.accountId == this.receiverId) {
         this.receiverExists = true;
+        this.invalidAccountId = false;
         break;
       }
     }
@@ -108,16 +123,22 @@ export class TransactionProcessComponent implements OnInit {
   }
 
   fundTransfer(fundTransferForm) {
-    if (this.customer.transactionPin == fundTransferForm.value.tPin) {
-      this._accountService.fundTransfer(this.customer.accountId, this.money, this.receiverId).subscribe();
-      setTimeout(() => {
-        this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
-          this._accountService.setCustomer(customer);
-        });
-      }, 4000);
-      this._router.navigate(['/show/account']);
-    } else {
-      this.wrongPassword = true;
-    }
+    this.wrongPassword = false;
+    this._accountService.checkTransactionPin(fundTransferForm.value.tPin, this.customer.accountId)
+      .subscribe(flag => this.tpinFlag = true, err => this.tpinFlag = false);
+    setTimeout(() => {
+      if (this.tpinFlag) {
+        this._accountService.fundTransfer(this.customer.accountId, this.money, this.receiverId).subscribe();
+        this.success = true;
+        setTimeout(() => {
+          this._accountService.getAccount(this.customer.accountId).subscribe((customer) => {
+            this._accountService.setCustomer(customer);
+            this._router.navigate(['/show/account']);
+          });
+        }, 2000);
+      } else {
+        this.wrongPassword = true;
+      }
+    }, 2000);
   }
 }

@@ -43,7 +43,9 @@ const appRoute: Routes = [
         AccountDetailsComponent ,
         PrintTransactionsComponent ,
         AdminAccessComponent],
-    providers: [AccountService],
+    providers: [
+        AccountService
+        ],
     bootstrap: [AppComponent]
 })
 

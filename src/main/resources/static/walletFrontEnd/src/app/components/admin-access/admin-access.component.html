@@ -7,14 +7,14 @@
       <button class="btn btn-bg" (click)="logout()">Logout</button>
     </div>
   </div>
-  <h3> All Accounts</h3>
+  <h3 style="color: rgba(214, 250, 148, 0.8);"> All Accounts</h3>
   <br>
   <div>
-    <table class="table table-stripped" style="width: 100%;">
+    <table class="table table-stripped">
       <thead style="align-items: center;">
-        <th>Account Id</th>
-        <th> Name </th>
-        <th>Operations</th>
+        <th style="width: 30%;">Account Id</th>
+        <th style="width: 30%;"> Name </th>
+        <th style="width: 30%;">Operations</th>
       </thead>
       <tbody>
         <tr *ngFor = "let customer of customers, let i = index">
@@ -29,28 +29,28 @@
     </table>
   </div>
   <br>
-  <div *ngIf= "show">
+  <div *ngIf= "show" style="margin-left: 100px; margin-right: 100px;">
     <h2> Account Details</h2>
     <table class="table white">
       <tr>
-        <th>Account Id</th>
-        <td>{{customer.accountId}}</td>
+        <th style="width: 50%;">Account Id</th>
+        <td style="width: 50%;">{{customer.accountId}}</td>
       </tr>
       <tr>
-        <th>Name</th>
-        <td>{{customer.name}}</td>
+        <th style="width: 50%;">Name</th>
+        <td style="width: 50%;">{{customer.name}}</td>
       </tr>
       <tr>
-        <th>E-mail Id</th>
-        <td>{{customer.eMail}}</td>
+        <th style="width: 50%;">E-mail Id</th>
+        <td style="width: 50%;">{{customer.eMail}}</td>
       </tr>
       <tr>
-        <th>Mobile Number</th>
-        <td>{{customer.mobileNumber}}</td>
+        <th style="width: 50%;">Mobile Number</th>
+        <td style="width: 50%;">{{customer.mobileNumber}}</td>
       </tr>
       <tr>
-        <th>Balance</th>
-        <td>{{customer.balance}}</td>
+        <th style="width: 50%;">Balance</th>
+        <td style="width: 50%;">{{customer.balance}}</td>
       </tr>
     </table>
   </div>

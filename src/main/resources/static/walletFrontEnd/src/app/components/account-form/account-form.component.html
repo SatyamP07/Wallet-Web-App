@@ -22,7 +22,7 @@
         <div class = "form group">
           <label for="mobileNumber">Mobile Number</label>
           <input type="text" name="mobileNumber" class="form-control input-tag" placeholder="8888888888" 
-          #mobileNumber="ngModel" ngModel pattern = "[0-9]{10}"/>
+          #mobileNumber="ngModel" ngModel pattern = "[0-9]{10}" required/>
           <small [hidden]= "mobileNumber.valid || mobileNumber.pristine">
             Should contain only digits. Length: Exact 10 digits
           </small>
@@ -34,7 +34,7 @@
           <input type="radio" name="nationalityType" value="Pan Card" #nationalityType="ngModel" ngModel (click)="checkNationality('PanCard')" style="margin-left: 30px;"> Pan Card
         </div>
         <div class = "form group" *ngIf = "nationality == 1">
-          <input type="text" name="nationalityNumber" class="form-control input-tag" placeholder="12 digit Aadhar Card Number" 
+          <input type="text" name="nationalityNumber" class="form-control input-tag" required placeholder="12 digit Aadhar Card Number" 
           #nationalityNumber="ngModel" ngModel pattern = "[0-9]{12}"/>
           <small [hidden]= "nationalityNumber.valid || nationalityNumber.pristine">
             Should contain only digits. Length: Exact 12 digits
@@ -42,7 +42,7 @@
         </div>
         <div class = "form group" *ngIf = "nationality == 2">
           <input type="text" name="nationalityNumber" class="form-control input-tag" placeholder="ABCDE1234F" 
-          #nationalityNumber="ngModel" ngModel pattern = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$"/>
+          #nationalityNumber="ngModel" ngModel pattern = "^[A-Z]{5}[0-9]{4}[A-Z]{1}$" required/>
           <small [hidden]= "nationalityNumber.valid || nationalityNumber.pristine">
             Invalid Pan Card Format
           </small>

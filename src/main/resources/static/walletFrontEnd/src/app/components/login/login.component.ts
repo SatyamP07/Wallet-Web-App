@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   private password: string  = null;
   private invalidFlag: boolean;
   private customers: CustomerDetails[];
-  private accountExists: boolean = false;
+  private accountExists: boolean;
   private adminLogin: boolean;
   constructor(private _accountService: AccountService, private _router: Router) { }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   login(loginForm) {
     if (this.adminLogin) {
-      if (this.password == 'QW123EBT!') {
+      if (this.password == 'QWERTY123!') {
         this.invalidFlag = false;
         this._router.navigate(['/admin']);
       }
@@ -49,33 +49,33 @@ export class LoginComponent implements OnInit {
         this.invalidFlag = true;
       }
     } else {
-      for(let i=0; i < this.customers.length; i++) {
-        if (this.accountId == this.customers[i].accountId) {
-          this.accountExists = true;
-          break;
-         }
-      }
-      if (this.accountExists) {
+      this._accountService.getAccount(this.accountId).subscribe((customer) => {this.customer = customer;
+        this.accountExists = true;
+      }, err => {
         this.accountExists = false;
-        this._accountService.getAccount(this.accountId).subscribe((customer) => this.customer = customer);
-        setTimeout(() => {
-          if ( this.password == this.customer.accountPassword) {
-            setTimeout(() => {
-              this._accountService.setCustomer(this.customer);
-              this._accountService.setIsSignedIn(true);
-            this._router.navigate(['/show/account']);
-            }, 2000);
-          } else {
-            this.invalidFlag = true;
-          }
-        },1000);
-      } else {
-        this.invalidFlag = true;
       }
+      );
+      setTimeout(() =>
+      {
+        if (this.accountExists) {
+          this._accountService.checkAccountPassword(this.password, this.accountId)
+            .subscribe(flag => this.invalidFlag = false, err => {this.invalidFlag = true; console.log(this.invalidFlag)});
+            setTimeout(() => {
+              if (!this.invalidFlag) {
+                this._accountService.setCustomer(this.customer);
+                this._accountService.setIsSignedIn(true);
+              this._router.navigate(['/show/account']);
+              }
+            }, 2000);
+        } else {
+          this.invalidFlag = true;
+        }
+      }, 2000);
     }
   }
 
   accessFlag() {
+    this.invalidFlag = false;
     this.adminLogin = !this.adminLogin;
   }
 
