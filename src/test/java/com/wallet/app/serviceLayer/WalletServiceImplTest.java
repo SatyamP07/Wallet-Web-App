@@ -117,6 +117,30 @@ public class WalletServiceImplTest {
 		walletService.withdraw(accountId, 1000);
 		assertNotNull(walletService.printTransactions(accountId));
 	}
+	
+	@Test
+	public void testIsAccountPasswordCorrect() {
+		CustomerDetails customer = walletService.createAccount(getCustomer());
+		assertEquals(walletService.isAccountPasswordCorrect(customer.getAccountId(), "Assemble"), true);
+	}
+	
+	@Test
+	public void testIsAccountPasswordCorrectFail() {
+		CustomerDetails customer = walletService.createAccount(getCustomer());
+		assertEquals(walletService.isAccountPasswordCorrect(customer.getAccountId(), "Asemble"), false);
+	}
+	
+	@Test
+	public void testIsTransactionPinCorrect() {
+		CustomerDetails customer = walletService.createAccount(getCustomer());
+		assertEquals(walletService.isTransactionPinCorrect(customer.getAccountId(), "4269"), true);
+	}
+	
+	@Test
+	public void testIsTransactionPinCorrectFail() {
+		CustomerDetails customer = walletService.createAccount(getCustomer());
+		assertEquals(walletService.isTransactionPinCorrect(customer.getAccountId(), "4242"), false);
+	}
 
 
 }
