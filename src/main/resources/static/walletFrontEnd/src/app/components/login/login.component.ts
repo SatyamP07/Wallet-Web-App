@@ -66,11 +66,11 @@ export class LoginComponent implements OnInit {
                 this._accountService.setIsSignedIn(true);
               this._router.navigate(['/show/account']);
               }
-            }, 2000);
+            }, 1000);
         } else {
           this.invalidFlag = true;
         }
-      }, 2000);
+      }, 1000);
     }
   }
 

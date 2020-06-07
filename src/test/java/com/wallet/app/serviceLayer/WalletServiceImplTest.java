@@ -28,6 +28,7 @@ public class WalletServiceImplTest {
 	@Autowired
 	private WalletServiceImpl walletService;
 	
+	// returns a CustomerDetails object
 	private CustomerDetails getCustomer() {
 		CustomerDetails customer = new CustomerDetails();
 		customer.setName("Steve Rogers");
@@ -41,6 +42,7 @@ public class WalletServiceImplTest {
 		return customer;
 	}
 	
+	//tests createAccount method from WalletServiceImpl class
 	@Test
 	public void testCreateAccount() {
 		CustomerDetails customer = getCustomer();
@@ -50,6 +52,7 @@ public class WalletServiceImplTest {
 		assertNotNull(savedCustomer.getAccountId());
 	}
 
+	//tests updateAccount method from WalletServiceImpl class
 	@Test
 	public void testUpdateAccount() {
 		CustomerDetails customer = getCustomer();
@@ -59,6 +62,7 @@ public class WalletServiceImplTest {
 		assertThat(updatedCustomer.getName()).isEqualTo("Tony Stark");		
 	}
 
+	//tests deleteAccountById method from WalletServiceImpl class
 	@Test
 	public void testDeleteAccountById() {
 		CustomerDetails customer = getCustomer();
@@ -69,6 +73,7 @@ public class WalletServiceImplTest {
 			isInstanceOf(NoSuchElementException.class);
 	}
 
+	//tests getAccountById method from WalletServiceImpl class
 	@Test
 	public void testGetAccountById() {
 		CustomerDetails customer = getCustomer();
@@ -77,11 +82,13 @@ public class WalletServiceImplTest {
 		assertThat(retrivedCustomer).isEqualToComparingFieldByField(savedCustomer);
 	}
 
+	//tests getAllAccounts method from WalletServiceImpl class
 	@Test
 	public void testGetAllAccounts() {
 		assertNotNull(walletService.getAllAccounts());
 	}
 
+	//tests deposit method from WalletServiceImpl class
 	@Test
 	public void testDeposit() {
 		int accountId = walletService.createAccount(getCustomer()).getAccountId();
@@ -90,6 +97,7 @@ public class WalletServiceImplTest {
 			isEqualTo(getCustomer().getBalance() + 2366);
 	}
 
+	//tests withdraw method from WalletServiceImpl class
 	@Test
 	public void testWithdraw() {
 		int accountId = walletService.createAccount(getCustomer()).getAccountId();
@@ -98,6 +106,7 @@ public class WalletServiceImplTest {
 			isEqualTo(getCustomer().getBalance() - 2366);
 	}
 
+	//tests fundTransfer method from WalletServiceImpl class
 	@Test
 	public void testFundTransfer() {
 		int senderAccountId = walletService.createAccount(getCustomer()).getAccountId();
@@ -110,6 +119,7 @@ public class WalletServiceImplTest {
 				);
 	}
 
+	//tests printTransaction method from WalletServiceImpl class
 	@Test
 	public void testPrintTransactions() {
 		int accountId = walletService.createAccount(getCustomer()).getAccountId();
@@ -118,24 +128,28 @@ public class WalletServiceImplTest {
 		assertNotNull(walletService.printTransactions(accountId));
 	}
 	
+	//tests isAccountPasswordCorrect method from WalletServiceImpl class
 	@Test
 	public void testIsAccountPasswordCorrect() {
 		CustomerDetails customer = walletService.createAccount(getCustomer());
 		assertEquals(walletService.isAccountPasswordCorrect(customer.getAccountId(), "Assemble"), true);
 	}
-	
+
+	//tests isAccountPasswordCorrect method from WalletServiceImpl class for incorrect password
 	@Test
 	public void testIsAccountPasswordCorrectFail() {
 		CustomerDetails customer = walletService.createAccount(getCustomer());
 		assertEquals(walletService.isAccountPasswordCorrect(customer.getAccountId(), "Asemble"), false);
 	}
 	
+	//tests isTransactionPinCorrect method from WalletServiceImpl class
 	@Test
 	public void testIsTransactionPinCorrect() {
 		CustomerDetails customer = walletService.createAccount(getCustomer());
 		assertEquals(walletService.isTransactionPinCorrect(customer.getAccountId(), "4269"), true);
 	}
 	
+	//tests isTrancationPinCorrect method from WalletServiceImpl class for incorrect pin
 	@Test
 	public void testIsTransactionPinCorrectFail() {
 		CustomerDetails customer = walletService.createAccount(getCustomer());

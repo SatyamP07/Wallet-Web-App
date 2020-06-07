@@ -30,6 +30,7 @@ public class WalletDaoInterfaceTest {
 	@Autowired
 	private WalletDaoInterface walletRepository;
 	
+	//returns a CustomerDetails object
 	private CustomerDetails getCustomer() {
 		CustomerDetails customer = new CustomerDetails();
 		customer.setName("Steve Rogers");
@@ -42,6 +43,7 @@ public class WalletDaoInterfaceTest {
 		return customer;
 	}
 	
+	//tests save method from JpaRepository Interface 
 	@Test
 	public void testSaveCustomer() {
 		CustomerDetails customer = getCustomer();
@@ -50,7 +52,7 @@ public class WalletDaoInterfaceTest {
 		
 		assertThat(savedCustomer).isEqualToComparingFieldByField(entityManagerCustomer);
 	}
-	
+	//tests findById method from JpaRepository Interface	
 	@Test
 	public void testFindByIdCustomer() {
 		CustomerDetails savedCustomer = entityManager.persist(getCustomer());
@@ -60,14 +62,14 @@ public class WalletDaoInterfaceTest {
 		
 		assertThat(retrivedCustomer).isEqualToComparingFieldByField(entityManagerCustomer);
 	}
-	
+	//tests deleteById method from JpaRepository Interface
 	@Test
 	public void deleteCustomerById() {
 		CustomerDetails savedCustomer = entityManager.persist(getCustomer());
 		walletRepository.deleteById(savedCustomer.getAccountId());
 		assertNull(entityManager.find(CustomerDetails.class, savedCustomer.getAccountId()));
 	}
-	
+	//tests update method from JpaRepository Interface
 	@Test
 	public void updateCustomer() {
 		CustomerDetails savedCustomer = entityManager.persist(getCustomer());
@@ -75,7 +77,8 @@ public class WalletDaoInterfaceTest {
 		CustomerDetails updatedCustomer = walletRepository.save(savedCustomer);
 		assertThat(updatedCustomer.getName()).isEqualTo("Tony Stark");
 	}
-	
+	//tests findAll method from JpaRepository Interface
+	@Test
 	public void findallCustomers() {
 		assertNotNull(walletRepository.findAll());
 	}

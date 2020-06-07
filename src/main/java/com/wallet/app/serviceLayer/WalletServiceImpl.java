@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wallet.app.Exceptions.UserNotFoundException;
 import com.wallet.app.daoLayer.WalletDaoInterface;
 import com.wallet.app.models.CustomerDetails;
 import com.wallet.app.models.TransactionDetails;
@@ -152,7 +153,10 @@ public class WalletServiceImpl implements WalletServiceInterface {
 				break;
 			}
 		}
-		return check;
+		if(check)
+			return check;
+		else
+			throw new UserNotFoundException("No user exists with this Account Id");
 	}
 	
 	@Override
