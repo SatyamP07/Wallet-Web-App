@@ -16,6 +16,9 @@ public class WalletServiceImpl implements WalletServiceInterface {
 	
 	@Autowired
 	private WalletDaoInterface walletRepository;
+	
+	//persists new CustomerDetails object in database
+	//encrypts the account password and transaction pin 
 	@Override
 	public CustomerDetails createAccount(CustomerDetails customer) {
 		String encryptedPassword = new String(passwordEncryptor(customer.getAccountPassword().getBytes()));
@@ -25,6 +28,7 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		return walletRepository.save(customer);
 	}
 
+	//updates the existing CustomerDetails object
 	@Override
 	public CustomerDetails updateAccount(CustomerDetails customer) {
 		if(!customer.getAccountPassword().equals(walletRepository.findById(customer.getAccountId()).get().getAccountPassword())) {
@@ -38,23 +42,28 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		return walletRepository.save(customer);
 	}
 
+	//deletes account with the given accountId
 	@Override
 	public boolean deleteAccountById(int accountId) {
 		walletRepository.deleteById(accountId);
 		return true;
 	}
 
+	//fetches account with given accountId
 	@Override
 	public CustomerDetails getAccountById(int accountId) {
 		return walletRepository.findById(accountId).get();
 	}
 
+	//fetches all accounts
 	@Override
 	public List<CustomerDetails> getAllAccounts() {
 		List<CustomerDetails> allAccounts =  walletRepository.findAll();
 		return allAccounts;
 	}
 
+	//updates account's amount field
+	//deposits amount with given accountId and amount  
 	@Override
 	public boolean deposit(int accountId, float amount) {
 		CustomerDetails customer = getAccountById(accountId);
@@ -74,6 +83,8 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		return true;
 	}
 
+	//updates account's amount field
+	//withdraws amount with given accountId and amount
 	@Override
 	public boolean withdraw(int accountId, float amount) {
 		CustomerDetails customer = getAccountById(accountId);
@@ -93,6 +104,8 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		return true;
 	}
 
+	//updates account's amount field
+	//transfers amount with given accountId and amount and receiverId
 	@Override
 	public boolean fundTransfer(int accountId, int receiverId, float amount) {
 		CustomerDetails customer = getAccountById(accountId);
@@ -119,12 +132,14 @@ public class WalletServiceImpl implements WalletServiceInterface {
 		return true;
 	}
 
+	//returns list of TransactionDetails objects associated with accountId
 	@Override
 	public List<TransactionDetails> printTransactions(int accountId) {
 		CustomerDetails customer = getAccountById(accountId);
 		return customer.getTransactionDetails();
 	}
 
+	//encrypts password
 	@Override
 	public byte[] passwordEncryptor(byte[] password) {
 		byte[] encrypted = new byte[password.length];
